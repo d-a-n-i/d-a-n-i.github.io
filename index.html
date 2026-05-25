@@ -3,363 +3,1179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dani Cohen - Mathematician, Data Scientist, and Quantitative Developer. Experience, projects, and travels.">
+    <meta name="theme-color" content="#0b1020">
+    <meta property="og:title" content="Dani Cohen">
+    <meta property="og:description" content="Mathematician • Data Scientist • Quantitative Developer">
+    <meta property="og:image" content="profile.jpg">
     <title>Dani Cohen</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+    <link rel="icon" type="image/jpeg" href="profile.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
     <style>
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        :root {
+            --bg-0: #07091a;
+            --bg-1: #0b1020;
+            --bg-2: #11183a;
+            --card: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.10);
+            --text: #e7ecff;
+            --text-dim: #a5b0d6;
+            --muted: #6b78a8;
+            --accent: #6ea8ff;
+            --accent-2: #a06bff;
+            --accent-3: #20e3b2;
+            --grad: linear-gradient(135deg, #6ea8ff 0%, #a06bff 50%, #ff6ec7 100%);
+            --grad-soft: linear-gradient(135deg, rgba(110,168,255,.15), rgba(160,107,255,.15), rgba(255,110,199,.15));
+            --shadow-lg: 0 30px 60px -20px rgba(0,0,0,.6), 0 8px 24px -8px rgba(110,168,255,.15);
+            --ring: 0 0 0 1px rgba(255,255,255,.08);
         }
 
-        .gradient-bg {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg-0);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.55;
+            overflow-x: hidden;
         }
 
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+        h1, h2, h3, .display { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -0.01em; }
+
+        a { color: inherit; text-decoration: none; }
+
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        .timeline-card {
-            border-left: 2px solid #e5e7eb;
+        /* ---------- Background Aurora ---------- */
+        .aurora {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(60vw 60vw at 10% 0%, rgba(110, 168, 255, .25), transparent 60%),
+                radial-gradient(50vw 50vw at 90% 10%, rgba(160, 107, 255, .22), transparent 60%),
+                radial-gradient(60vw 60vw at 50% 100%, rgba(32, 227, 178, .18), transparent 60%),
+                linear-gradient(180deg, #07091a 0%, #0a0f25 100%);
+            filter: saturate(115%);
+        }
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ---------- Nav ---------- */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(8, 11, 28, 0.55);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: .02em;
+        }
+        .brand-mark {
+            width: 32px; height: 32px;
+            border-radius: 9px;
+            background: var(--grad);
+            display: grid; place-items: center;
+            color: #0b1020; font-weight: 800;
+            box-shadow: 0 8px 24px rgba(110,168,255,.35);
+        }
+        .nav-links { display: flex; gap: 6px; }
+        .nav-links a {
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 14px;
+            color: var(--text-dim);
+            transition: all .2s ease;
+        }
+        .nav-links a:hover { color: white; background: rgba(255,255,255,.06); }
+        @media (max-width: 720px) {
+            .nav-links { display: none; }
+        }
+
+        /* ---------- Hero ---------- */
+        header.hero {
             position: relative;
-            transition: all 0.3s ease;
+            padding: 80px 24px 56px;
+            text-align: center;
         }
-
-        .timeline-card:hover {
-            transform: translateX(10px);
-        }
-
-        .timeline-card::before {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #3B82F6;
-            border-radius: 50%;
-            left: -7px;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-card:hover::before {
-            background: #2563EB;
-            box-shadow: 0 0 15px #3B82F6;
-        }
-
-        .skill-tag {
-            background: rgba(59, 130, 246, 0.1);
-            color: #2563EB;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
+        .avatar-wrap {
             display: inline-block;
-            margin: 0.25rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: #2563EB;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .profile-img {
+            position: relative;
+            padding: 4px;
             border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            background: conic-gradient(from 180deg, #6ea8ff, #a06bff, #20e3b2, #ff6ec7, #6ea8ff);
+            animation: spin 8s linear infinite;
+            box-shadow: 0 18px 60px -10px rgba(110,168,255,.35);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .avatar {
+            width: 180px; height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0a0f25;
+            background: #0a0f25;
+            animation: spin 8s linear infinite reverse;
+        }
+        @media (max-width: 520px) {
+            .avatar { width: 140px; height: 140px; }
+        }
+        .name {
+            margin: 28px 0 6px;
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 700;
+            background: linear-gradient(180deg, #ffffff 30%, #b9c3ee 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .tagline {
+            color: var(--text-dim);
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            margin: 0 0 22px;
+        }
+        .tagline .dot { color: var(--accent); margin: 0 8px; }
+
+        .socials {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+        }
+        .icon-btn {
+            width: 42px; height: 42px;
+            display: inline-grid;
+            place-items: center;
+            color: var(--text);
+            border-radius: 999px;
+            transition: all .25s ease;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+        .icon-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.08);
+            border-color: rgba(255,255,255,.12);
+            color: white;
+            box-shadow: 0 8px 24px -8px rgba(110,168,255,.45);
+        }
+        .icon-btn i { font-size: 18px; }
+
+        /* Hero socials: vertical list with harmonized handles */
+        .socials-list {
+            margin: 24px auto 0;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px;
+            border-radius: 18px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+        }
+        .social-row {
+            display: grid;
+            grid-template-columns: 28px 1fr auto;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: var(--text-dim);
+            transition: all .2s ease;
+            border: 1px solid transparent;
+            text-align: left;
+        }
+        .social-row:hover {
+            background: rgba(255,255,255,.06);
+            border-color: rgba(255,255,255,.10);
+            color: white;
+            transform: translateX(2px);
+        }
+        .social-row i.glyph {
+            color: var(--accent);
+            font-size: 16px;
+            text-align: center;
+        }
+        .social-row .handle {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+        .social-row .platform {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            opacity: .85;
+        }
+        .social-row:hover .platform { color: var(--accent); }
+
+        /* ---------- Sections ---------- */
+        section { padding: 56px 24px; position: relative; }
+        .section-head {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 28px;
+        }
+        .section-head h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin: 0;
+            font-weight: 700;
+        }
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(110,168,255,.10);
+            border: 1px solid rgba(110,168,255,.25);
         }
 
-        .profile-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+        .card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: 26px;
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-lg);
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
         }
-
-        .social-icon {
-            transition: all 0.3s ease;
-        }
-
-        .social-icon:hover {
+        .card:hover {
+            border-color: rgba(255,255,255,.18);
             transform: translateY(-3px);
-            color: #2563EB;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+        @media (max-width: 880px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        /* ---------- Skills ---------- */
+        .skill-row { padding: 14px 0; border-top: 1px dashed rgba(255,255,255,.08); }
+        .skill-row:first-child { border-top: 0; padding-top: 0; }
+        .skill-row h3 {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 1.05rem; font-weight: 600; margin: 0 0 10px;
+        }
+        .skill-row h3 .ico {
+            width: 36px; height: 36px;
+            display: grid; place-items: center;
+            background: var(--grad-soft);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            color: var(--accent);
+        }
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag {
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12.5px;
+            background: rgba(110,168,255,.10);
+            border: 1px solid rgba(110,168,255,.25);
+            color: #cfd9ff;
+            transition: all .2s ease;
+        }
+        .tag:hover {
+            transform: translateY(-2px);
+            background: rgba(110,168,255,.22);
+            color: white;
+        }
+
+        /* ---------- Interests ---------- */
+        .interest {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 14px;
+            align-items: start;
+            padding: 14px 0;
+            border-top: 1px dashed rgba(255,255,255,.08);
+        }
+        .interest:first-child { border-top: 0; padding-top: 0; }
+        .interest .ico {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            background: var(--grad-soft);
+            border: 1px solid var(--card-border);
+            display: grid; place-items: center;
+            color: var(--accent-3);
+            font-size: 18px;
+        }
+        .interest h3 { margin: 2px 0 4px; font-size: 1.05rem; font-weight: 600; }
+        .interest p { margin: 0; color: var(--text-dim); font-size: .94rem; }
+        .interest a { color: var(--accent); border-bottom: 1px dashed rgba(110,168,255,.5); }
+        .interest a:hover { color: white; border-bottom-color: white; }
+
+        .lang-flags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+        .flag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid var(--card-border);
+            font-size: 13px;
+            color: var(--text-dim);
+            position: relative;
+            cursor: default;
+            transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        }
+        .flag:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.08); }
+        .flag img { width: 22px; height: 16px; border-radius: 3px; object-fit: cover; }
+        .flag[data-level]::after {
+            content: attr(data-level);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: var(--bg-1);
+            color: var(--accent);
+            border: 1px solid var(--card-border);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease, transform .2s ease;
+            box-shadow: 0 8px 20px -8px rgba(0,0,0,.5);
+        }
+        .flag[data-level]::before {
+            content: "";
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--card-border);
+            opacity: 0;
+            transition: opacity .2s ease;
+        }
+        .flag[data-level]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .flag[data-level]:hover::before { opacity: 1; }
+        .flag.clickable {
+            color: var(--accent);
+            border-color: rgba(110,168,255,.45);
+            background: rgba(110,168,255,.10);
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 0 0 rgba(110,168,255,.45);
+            animation: pulse 2.4s ease-in-out infinite;
+        }
+        .flag.clickable:hover { color: white; background: rgba(110,168,255,.22); }
+        .flag.clickable .link-hint {
+            font-size: 10px;
+            display: inline-flex; align-items: center; gap: 4px;
+            color: var(--accent);
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(110,168,255,.45); }
+            50%      { box-shadow: 0 0 0 8px rgba(110,168,255,0); }
+        }
+
+        /* ---------- Map ---------- */
+        .map-wrap {
+            position: relative;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-lg);
+            background: #0a0f25;
+        }
+        #map {
+            height: 520px;
+            width: 100%;
+            background: #0a0f25;
+        }
+        @media (max-width: 640px) { #map { height: 420px; } }
+        .map-legend {
+            position: absolute;
+            bottom: 14px; left: 14px;
+            padding: 10px 14px;
+            background: rgba(8, 11, 28, .8);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            font-size: 12.5px;
+            color: var(--text-dim);
+            backdrop-filter: blur(8px);
+            display: flex; align-items: center; gap: 10px;
+            z-index: 500;
+        }
+        .legend-dot {
+            width: 10px; height: 10px; border-radius: 999px;
+            background: #ff6ec7;
+            box-shadow: 0 0 0 4px rgba(255,110,199,.25);
+        }
+        .country-chips {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            margin-top: 18px;
+        }
+        .chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid var(--card-border);
+            color: var(--text-dim);
+        }
+        .chip img { width: 16px; height: 12px; border-radius: 2px; object-fit: cover; }
+        .stat-row {
+            display: flex; flex-wrap: wrap; gap: 24px;
+            margin-top: 18px;
+        }
+        .stat .num {
+            font-size: 1.8rem; font-weight: 700;
+            background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .stat .label { color: var(--text-dim); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; }
+
+        /* Leaflet marker custom */
+        .country-pin {
+            width: 14px; height: 14px;
+            background: #ff6ec7;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 4px rgba(255,110,199,.35);
+            animation: pin-pulse 2.6s ease-in-out infinite;
+        }
+        @keyframes pin-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(255,110,199,.35); }
+            50%      { transform: scale(1.25); box-shadow: 0 0 0 10px rgba(255,110,199,0); }
+        }
+        .leaflet-popup-content-wrapper {
+            background: rgba(8, 11, 28, .94);
+            color: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+        .leaflet-popup-tip { background: rgba(8, 11, 28, .94); }
+        .leaflet-popup-content { margin: 10px 14px; font-family: 'Inter', sans-serif; font-size: 13px; }
+        .leaflet-container a.leaflet-popup-close-button { color: #cfd9ff; }
+        .leaflet-control-attribution {
+            background: rgba(8, 11, 28, .8) !important;
+            color: #6b78a8 !important;
+            font-size: 10px !important;
+        }
+        .leaflet-control-attribution a { color: #a5b0d6 !important; }
+
+        /* ---------- Projects ---------- */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        @media (max-width: 980px) { .projects { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 660px) { .projects { grid-template-columns: 1fr; } }
+        .project {
+            position: relative;
+            overflow: hidden;
+            border-radius: 22px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+        .project:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,.2);
+            box-shadow: var(--shadow-lg);
+        }
+        .project .thumb {
+            aspect-ratio: 16/10;
+            background: #0a0f25;
+            position: relative;
+            overflow: hidden;
+        }
+        .project .thumb img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform .6s ease;
+        }
+        .project:hover .thumb img { transform: scale(1.05); }
+        .project .thumb::after {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(7,9,26,.7) 100%);
+            pointer-events: none;
+        }
+        .project .body { padding: 18px 20px 22px; }
+        .project .body h3 {
+            font-size: 1.1rem; font-weight: 700; margin: 0 0 6px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .project .body p { margin: 0; color: var(--text-dim); font-size: .92rem; }
+        .project .meta {
+            margin-top: 12px;
+            display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .project .link {
+            position: absolute;
+            top: 14px; right: 14px;
+            width: 36px; height: 36px;
+            border-radius: 999px;
+            background: rgba(8,11,28,.7);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,.15);
+            color: white;
+            display: grid; place-items: center;
+            z-index: 2;
+            transition: all .2s ease;
+        }
+        .project:hover .link { background: var(--accent); color: #0b1020; transform: rotate(-45deg); }
+
+        /* zbace retro thumb */
+        .retro-thumb {
+            position: relative;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 50% 60%, rgba(110,168,255,.25), transparent 60%), #050816;
+            overflow: hidden;
+        }
+        .retro-thumb::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+                radial-gradient(1px 1px at 25% 70%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 40% 30%, #fff, transparent),
+                radial-gradient(1px 1px at 60% 80%, #fff, transparent),
+                radial-gradient(2px 2px at 80% 25%, #fff, transparent),
+                radial-gradient(1px 1px at 70% 55%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 90% 70%, #fff, transparent),
+                radial-gradient(1px 1px at 15% 85%, #fff, transparent),
+                radial-gradient(1px 1px at 35% 50%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 55% 15%, #fff, transparent);
+            opacity: .8;
+            animation: starfield 22s linear infinite;
+        }
+        @keyframes starfield {
+            from { transform: translateY(0); }
+            to   { transform: translateY(-40px); }
+        }
+        .retro-thumb svg.ship {
+            position: absolute;
+            left: 50%; bottom: 18%;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 0 10px rgba(110,168,255,.6));
+            animation: hover 3s ease-in-out infinite;
+        }
+        @keyframes hover {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(-6px); }
+        }
+        .retro-thumb .laser {
+            position: absolute;
+            left: 50%; bottom: 38%;
+            width: 2px; height: 32px;
+            background: linear-gradient(180deg, #20e3b2, transparent);
+            transform: translateX(-50%);
+            animation: laser 1.4s linear infinite;
+            opacity: 0;
+        }
+        @keyframes laser {
+            0% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -120px); }
+        }
+        .retro-thumb .label {
+            position: absolute;
+            top: 14px; left: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            color: #20e3b2;
+            letter-spacing: .25em;
+        }
+
+        /* ---------- Timeline ---------- */
+        .timeline { position: relative; padding-left: 28px; }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 6px; bottom: 6px; left: 8px;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, rgba(110,168,255,.5), rgba(160,107,255,.5), transparent);
+            border-radius: 2px;
+        }
+        .t-item { position: relative; padding: 14px 0; padding-left: 14px; }
+        .t-item::before {
+            content: "";
+            position: absolute;
+            top: 22px; left: -23px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--bg-1);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 0 3px rgba(110,168,255,.18);
+            transition: all .25s ease;
+        }
+        .t-item.current::before {
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(110,168,255,.25), 0 0 18px rgba(110,168,255,.6);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(110,168,255,.25), 0 0 18px rgba(110,168,255,.6); }
+            50%      { box-shadow: 0 0 0 8px rgba(110,168,255,.10), 0 0 24px rgba(110,168,255,.9); }
+        }
+        .t-item:hover::before { transform: scale(1.2); }
+        .t-item h3 { margin: 0; font-size: 1.02rem; font-weight: 600; }
+        .t-item .when { color: var(--accent); font-size: 13px; font-weight: 500; margin-top: 2px; }
+        .t-item .extra { color: var(--text-dim); font-size: 12.5px; margin-top: 3px; }
+
+        .badge-current {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 2px 8px;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #0b1020;
+            background: var(--accent-3);
+            border-radius: 999px;
+            margin-left: 8px;
+            letter-spacing: .04em;
+        }
+        .badge-current .blink {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #0b1020;
+            animation: blinkdot 1.4s ease-in-out infinite;
+        }
+        @keyframes blinkdot { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+        /* ---------- Footer ---------- */
+        footer {
+            margin-top: 40px;
+            padding: 40px 24px 60px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,.06);
+            background: linear-gradient(180deg, transparent, rgba(110,168,255,.06));
+        }
+        footer .copy { color: var(--muted); font-size: 12.5px; margin-top: 14px; }
+
+        /* Reveal animation on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Hero Section -->
-    <header class="gradient-bg text-white">
-        <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <div class="mb-8 flex justify-center">
-                    <img src="20240313_155734.jpg" alt="Dani Cohen" class="profile-img w-48 h-48 object-cover animate__animated animate__fadeIn">
-                </div>
-                <h1 class="text-4xl font-bold sm:text-5xl md:text-6xl animate__animated animate__fadeInDown">
-                    <span class="block">Dani Cohen</span>
-                </h1>
-                <div class="mt-4 space-y-2 animate__animated animate__fadeInUp">
-                    <p class="text-xl">Mathematician • Data Scientist • Quantitative Developer</p>
-                </div>
-                <div class="mt-8 flex justify-center space-x-6 animate__animated animate__fadeInUp">
-                    <a href="mailto:d@d85c.com" class="social-icon text-white">
-                        <span class="sr-only">Email</span>
-                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                        </svg>
-                    </a>
-                    <a href="http://fb.com/dani.chn" class="social-icon text-white">
-                        <span class="sr-only">Facebook</span>
-                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                    <a href="http://instagram.com/howi_tzer" class="social-icon text-white">
-                        <span class="sr-only">Instagram</span>
-                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/dani-cohen-8079673/" class="social-icon text-white">
-                        <span class="sr-only">LinkedIn</span>
-                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                    <a href="https://www.youtube.com/@DaniCohenB" class="social-icon text-white">
-                        <span class="sr-only">YouTube</span>
-                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd"></path>
-                        </svg>
-                    </a>
-                </div>
+<body>
+    <div class="aurora"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#top" class="brand">
+                <span class="brand-mark">DC</span>
+                <span>Dani Cohen</span>
+            </a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#travel">Travel</a>
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header id="top" class="hero">
+        <div class="container">
+            <div class="avatar-wrap">
+                <img class="avatar" src="profile.jpg" alt="Dani Cohen" loading="eager">
+            </div>
+            <h1 class="name">Dani Cohen</h1>
+            <p class="tagline">
+                Mathematician <span class="dot">•</span> Data Scientist <span class="dot">•</span> Quantitative Developer
+            </p>
+
+            <div class="socials-list" aria-label="Contact and social links">
+                <a class="social-row" href="mailto:d@d85c.com" title="Email">
+                    <i class="glyph fa-regular fa-envelope"></i>
+                    <span class="handle">d@d85c.com</span>
+                    <span class="platform">Email</span>
+                </a>
+                <a class="social-row" href="tel:+972522444492" title="Phone">
+                    <i class="glyph fa-solid fa-phone"></i>
+                    <span class="handle">+972-52-244-4492</span>
+                    <span class="platform">Phone</span>
+                </a>
+                <a class="social-row" href="https://wa.me/972522444492" target="_blank" rel="noopener" title="WhatsApp">
+                    <i class="glyph fa-brands fa-whatsapp"></i>
+                    <span class="handle">+972-52-244-4492</span>
+                    <span class="platform">WhatsApp</span>
+                </a>
+                <a class="social-row" href="https://github.com/d-a-n-i" target="_blank" rel="noopener" title="GitHub">
+                    <i class="glyph fa-brands fa-github"></i>
+                    <span class="handle">@d-a-n-i</span>
+                    <span class="platform">GitHub</span>
+                </a>
+                <a class="social-row" href="https://www.linkedin.com/in/dani-cohen-8079673/" target="_blank" rel="noopener" title="LinkedIn">
+                    <i class="glyph fa-brands fa-linkedin-in"></i>
+                    <span class="handle">dani-cohen</span>
+                    <span class="platform">LinkedIn</span>
+                </a>
+                <a class="social-row" href="https://www.instagram.com/howi_tzer/" target="_blank" rel="noopener" title="Instagram">
+                    <i class="glyph fa-brands fa-instagram"></i>
+                    <span class="handle">@howi_tzer</span>
+                    <span class="platform">Instagram</span>
+                </a>
+                <a class="social-row" href="https://fb.com/dani.chn" target="_blank" rel="noopener" title="Facebook">
+                    <i class="glyph fa-brands fa-facebook-f"></i>
+                    <span class="handle">dani.chn</span>
+                    <span class="platform">Facebook</span>
+                </a>
+                <a class="social-row" href="https://www.youtube.com/@DaniCohenB" target="_blank" rel="noopener" title="YouTube">
+                    <i class="glyph fa-brands fa-youtube"></i>
+                    <span class="handle">@DaniCohenB</span>
+                    <span class="platform">YouTube</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <!-- Skills Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div class="glassmorphism rounded-lg p-6 hover:shadow-xl transition-all duration-300">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 animate__animated animate__fadeIn">I Do</h2>
-                <div class="space-y-4">
-                    <div class="animate__animated animate__fadeInLeft">
-                        <h3 class="text-lg font-medium text-gray-900">Algorithms Research and Development</h3>
-                        <div class="mt-2">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">MATLAB</span>
-                            <span class="skill-tag">R</span>
-                            <span class="skill-tag">C++</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">C#</span>
+    <!-- About / Skills / Interests -->
+    <section id="about">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow"><i class="fa-solid fa-sparkles"></i> About</span>
+                <h2>What I do, what I love</h2>
+            </div>
+
+            <div class="grid-2">
+                <!-- I Do -->
+                <div class="card reveal">
+                    <div class="skill-row">
+                        <h3><span class="ico"><i class="fa-solid fa-code"></i></span> Algorithms Research &amp; Development</h3>
+                        <div class="tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">MATLAB</span>
+                            <span class="tag">R</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">C#</span>
                         </div>
                     </div>
-                    <div class="animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
-                        <h3 class="text-lg font-medium text-gray-900">Financial Engineering</h3>
-                        <div class="mt-2">
-                            <span class="skill-tag">Algo Trading</span>
-                            <span class="skill-tag">Derivatives</span>
+                    <div class="skill-row">
+                        <h3><span class="ico"><i class="fa-solid fa-chart-line"></i></span> Data Science &amp; Quant</h3>
+                        <div class="tags">
+                            <span class="tag">Statistics</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Signal Processing</span>
+                            <span class="tag">Market Microstructure</span>
                         </div>
                     </div>
-                    <div class="animate__animated animate__fadeInLeft" style="animation-delay: 0.4s">
-                        <h3 class="text-lg font-medium text-gray-900">Teaching</h3>
+                    <div class="skill-row">
+                        <h3><span class="ico"><i class="fa-solid fa-square-root-variable"></i></span> Mathematics</h3>
+                    </div>
+                </div>
+
+                <!-- I Like -->
+                <div class="card reveal">
+                    <div class="interest">
+                        <div class="ico"><i class="fa-solid fa-plane-departure"></i></div>
+                        <div>
+                            <h3>Travelling</h3>
+                            <p><a href="#travel">See where I've been</a> - 28 countries and counting.</p>
+                        </div>
+                    </div>
+                    <div class="interest">
+                        <div class="ico"><i class="fa-solid fa-camera"></i></div>
+                        <div>
+                            <h3>Photography</h3>
+                            <p>Catch the latest on <a href="https://www.instagram.com/howi_tzer/" target="_blank" rel="noopener">Instagram</a>.</p>
+                        </div>
+                    </div>
+                    <div class="interest">
+                        <div class="ico"><i class="fa-solid fa-feather"></i></div>
+                        <div>
+                            <h3>Nature</h3>
+                            <p>I filmed a falcon family that nested below my window - <a href="https://www.youtube.com/@DaniCohenB" target="_blank" rel="noopener">watch on YouTube</a>.</p>
+                        </div>
+                    </div>
+                    <div class="interest">
+                        <div class="ico"><i class="fa-solid fa-language"></i></div>
+                        <div>
+                            <h3>Languages</h3>
+                            <div class="lang-flags">
+                                <span class="flag" data-level="C2 · Native"><img src="https://flagcdn.com/il.svg" alt="Hebrew"> Hebrew</span>
+                                <span class="flag" data-level="C2 · Fluent"><img src="https://flagcdn.com/gb.svg" alt="English"> English</span>
+                                <a class="flag clickable" data-level="B2 · Upper-Intermediate" href="https://lyricstranslate.com/en/translator/dani2" target="_blank" rel="noopener" title="See my translations on lyricstranslate.com">
+                                    <img src="https://flagcdn.com/ru.svg" alt="Russian"> Russian
+                                    <span class="link-hint"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                                </a>
+                                <span class="flag" data-level="A2 · Elementary"><img src="https://flagcdn.com/bg.svg" alt="Bulgarian"> Bulgarian</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interest">
+                        <div class="ico"><i class="fa-solid fa-sailboat"></i></div>
+                        <div><h3>Sailing</h3><p>Out on the water whenever the wind allows.</p></div>
+                    </div>
+                    <div class="interest">
+                        <div class="ico"><i class="fa-solid fa-gamepad"></i></div>
+                        <div><h3>Gaming</h3></div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-<!-- Updated "I Like" section -->
-<div class="glassmorphism rounded-lg p-6 hover:shadow-xl transition-all duration-300">
-    <h2 class="text-2xl font-bold text-gray-900 mb-4 animate__animated animate__fadeIn">I Like</h2>
-    <div class="space-y-4">
-        <div class="interest-card travel-card card-hover rounded-lg p-4 animate__animated animate__fadeInRight">
-            <h3 class="text-lg font-medium text-gray-900">
-                <i class="fas fa-plane-departure interest-icon"></i>
-                Travelling
-            </h3>
-            <p class="text-gray-600"><a href="world.png" class="text-blue-600 hover:text-blue-800 transition-colors duration-300">Where I've been so far</a></p>
-        </div>
-        
-        <div class="interest-card photo-card card-hover rounded-lg p-4 animate__animated animate__fadeInRight" style="animation-delay: 0.2s">
-            <h3 class="text-lg font-medium text-gray-900">
-                <i class="fas fa-camera interest-icon"></i>
-                Photography
-            </h3>
-            <p class="text-gray-600"><a href="https://www.instagram.com/howi_tzer/" class="text-blue-600 hover:text-blue-800 transition-colors duration-300">I'm on Instagram</a></p>
-        </div>
+    <!-- Travel Map -->
+    <section id="travel">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow"><i class="fa-solid fa-globe"></i> Travel</span>
+                <h2>Where I've been</h2>
+            </div>
 
-        <div class="interest-card nature-card card-hover rounded-lg p-4 animate__animated animate__fadeInRight" style="animation-delay: 0.3s">
-            <h3 class="text-lg font-medium text-gray-900">
-                <i class="fas fa-feather-alt interest-icon"></i>
-                Nature
-            </h3>
-            <p class="text-gray-600">
-                Watch the amazing story of a falcon family that nested right below my bedroom window! 
-                <a href="https://www.youtube.com/@DaniCohenB" class="text-blue-600 hover:text-blue-800 transition-colors duration-300">Check it out on YouTube</a>
-            </p>
+            <div class="card reveal" style="padding: 14px;">
+                <div class="map-wrap">
+                    <div id="map" role="img" aria-label="Interactive world map of countries I have visited"></div>
+                    <div class="map-legend"><span class="legend-dot"></span> Visited (click for details)</div>
+                </div>
+
+                <div class="stat-row">
+                    <div class="stat"><div class="num" id="stat-countries">31</div><div class="label">Countries</div></div>
+                    <div class="stat"><div class="num">3</div><div class="label">Continents touched</div></div>
+                    <div class="stat"><div class="num">∞</div><div class="label">Stories</div></div>
+                </div>
+
+                <div class="country-chips" id="chips"></div>
+            </div>
         </div>
-        
-        <div class="interest-card lang-card card-hover rounded-lg p-4 animate__animated animate__fadeInRight" style="animation-delay: 0.4s">
-            <h3 class="text-lg font-medium text-gray-900">
-                <i class="fas fa-language interest-icon"></i>
-                Languages
-            </h3>
-            <div class="mt-2 space-x-2">
-                <img src="il.png" class="inline-block h-6 hover:transform hover:scale-110 transition-transform duration-300" alt="Hebrew">
-                <img src="gb.png" class="inline-block h-6 hover:transform hover:scale-110 transition-transform duration-300" alt="English">
-                <a href="https://lyricstranslate.com/en/translator/dani2">
-                    <img src="ru.png" class="inline-block h-6 hover:transform hover:scale-110 transition-transform duration-300" alt="Russian">
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow"><i class="fa-solid fa-rocket"></i> Projects</span>
+                <h2>Side things I build for fun</h2>
+            </div>
+
+            <div class="projects">
+                <a class="project reveal" href="https://packmate.d85c.com" target="_blank" rel="noopener">
+                    <span class="link" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    <div class="thumb">
+                        <img
+                            src="https://image.thum.io/get/width/800/crop/600/https://packmate.d85c.com/"
+                            alt="Packmate screenshot"
+                            loading="lazy"
+                            referrerpolicy="no-referrer"
+                            onerror="this.onerror=null;this.src='https://s.wordpress.com/mshots/v1/https%3A%2F%2Fpackmate.d85c.com?w=800&amp;h=500'">
+                    </div>
+                    <div class="body">
+                        <h3><i class="fa-solid fa-suitcase-rolling" style="color:var(--accent)"></i> Packmate</h3>
+                        <p>A trip packing helper that builds the perfect list for any journey.</p>
+                        <div class="meta">
+                            <span class="tag">Web</span>
+                            <span class="tag">UX</span>
+                            <span class="tag">Travel</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="project reveal" href="https://visualizer.d85c.com" target="_blank" rel="noopener">
+                    <span class="link" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    <div class="thumb">
+                        <img
+                            src="https://image.thum.io/get/width/800/crop/600/https://visualizer.d85c.com/"
+                            alt="Visualizer screenshot"
+                            loading="lazy"
+                            referrerpolicy="no-referrer"
+                            onerror="this.onerror=null;this.src='https://s.wordpress.com/mshots/v1/https%3A%2F%2Fvisualizer.d85c.com?w=800&amp;h=500'">
+                    </div>
+                    <div class="body">
+                        <h3><i class="fa-solid fa-wave-square" style="color:var(--accent-2)"></i> Visualizer</h3>
+                        <p>A music visualization tool that turns sound into responsive art.</p>
+                        <div class="meta">
+                            <span class="tag">Audio</span>
+                            <span class="tag">WebGL</span>
+                            <span class="tag">DSP</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="project reveal" href="https://zbace.d85c.com" target="_blank" rel="noopener">
+                    <span class="link" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    <div class="thumb">
+                        <div class="retro-thumb" aria-hidden="true">
+                            <span class="label">ZBACE</span>
+                            <div class="laser"></div>
+                            <svg class="ship" width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#cfe1ff"/>
+                                        <stop offset="100%" stop-color="#6ea8ff"/>
+                                    </linearGradient>
+                                </defs>
+                                <polygon points="32,2 60,52 32,40 4,52" fill="url(#g1)" stroke="#fff" stroke-width="1.5"/>
+                                <polygon points="32,16 44,46 32,40 20,46" fill="#0b1020" opacity=".6"/>
+                                <circle cx="32" cy="28" r="3" fill="#20e3b2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <h3><i class="fa-solid fa-rocket" style="color:var(--accent-3)"></i> Zbace</h3>
+                        <p>A retro browser space shooter - pure pixels, lasers, and high scores.</p>
+                        <div class="meta">
+                            <span class="tag">Game</span>
+                            <span class="tag">Canvas</span>
+                            <span class="tag">Retro</span>
+                        </div>
+                    </div>
                 </a>
             </div>
         </div>
+    </section>
 
-        <div class="interest-card sailing-card card-hover rounded-lg p-4 animate__animated animate__fadeInRight" style="animation-delay: 0.6s">
-            <h3 class="text-lg font-medium text-gray-900">
-                <i class="fas fa-ship interest-icon"></i>
-                Sailing
-            </h3>
-        </div>
-
-        <div class="interest-card gaming-card card-hover rounded-lg p-4 animate__animated animate__fadeInRight" style="animation-delay: 0.8s">
-            <h3 class="text-lg font-medium text-gray-900">
-                <i class="fas fa-gamepad interest-icon"></i>
-                Gaming
-            </h3>
-        </div>
-    </div>
-</div>
-
-<div class="glassmorphism rounded-lg p-6 mb-8 hover:shadow-xl transition-all duration-300">
-    <h2 class="text-2xl font-bold text-gray-900 mb-8 animate__animated animate__fadeIn">Experience</h2>
-    <div class="space-y-8">
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Algorithms Researcher @ Solidus</h3>
-                    <p class="text-gray-600">2024 - Present</p>
-                </div>
+    <!-- Experience -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow"><i class="fa-solid fa-briefcase"></i> Experience</span>
+                <h2>Selected roles</h2>
             </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Algorithms Developer @ Prisma Photonics</h3>
-                    <p class="text-gray-600">2021 - 2024</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.3s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Researcher @ Pagaya</h3>
-                    <p class="text-gray-600">2020 - 2021</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.4s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Freelancer @ Multiple Companies</h3>
-                    <p class="text-gray-600">2018 - 2020</p>
-                    <p class="text-sm text-gray-500">Mixtiles, Cycuro, PandaTS, Yopi</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.5s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Researcher @ Istra Research</h3>
-                    <p class="text-gray-600">2014 - 2018</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.6s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Researcher @ Deshesoft</h3>
-                    <p class="text-gray-600">2013 - 2014</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.7s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Algorithm Developer @ Tradologic</h3>
-                    <p class="text-gray-600">2011 - 2013</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.8s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Lead Developer and Algorithm Developer @ Pulsar Investments</h3>
-                    <p class="text-gray-600">2008 - 2011</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="timeline-card pl-6 animate__animated animate__fadeInLeft" style="animation-delay: 0.9s">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Quantitative Developer @ SuperDerivatives</h3>
-                    <p class="text-gray-600">2006 - 2008</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-        <!-- Education Timeline -->
-        <div class="glassmorphism rounded-lg p-6 hover:shadow-xl transition-all duration-300">
-            <h2 class="text-2xl font-bold text-gray-900 mb-8 animate__animated animate__fadeIn">Education</h2>
-            <div class="space-y-8">
-                <div class="timeline-card pl-6 animate__animated animate__fadeInRight">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-900">M.B.A. @ Tel Aviv University</h3>
-                            <p class="text-gray-600">2019 - 2021</p>
-                        </div>
+            <div class="card reveal">
+                <div class="timeline">
+                    <div class="t-item current">
+                        <h3>Quant Researcher @ BAM<span class="badge-current"><span class="blink"></span>Current</span></h3>
+                        <div class="when">2026 - Present</div>
                     </div>
-                </div>
-                <div class="timeline-card pl-6 animate__animated animate__fadeInRight" style="animation-delay: 0.2s">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-900">M.Sc, Mathematics @ Weizmann Institute of Science</h3>
-                            <p class="text-gray-600">2002 - 2004</p>
-                        </div>
+                    <div class="t-item">
+                        <h3>Algorithms Researcher @ Solidus</h3>
+                        <div class="when">2024 - 2025</div>
                     </div>
-                </div>
-                <div class="timeline-card pl-6 animate__animated animate__fadeInRight" style="animation-delay: 0.4s">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-900">B.Sc, Mathematics and Computer Science @ Tel Aviv University</h3>
-                            <p class="text-gray-600">1998 - 2002</p>
-                        </div>
+                    <div class="t-item">
+                        <h3>Algorithms Developer @ Prisma Photonics</h3>
+                        <div class="when">2021 - 2024</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Researcher @ Pagaya</h3>
+                        <div class="when">2020 - 2021</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Freelancer @ Multiple Companies</h3>
+                        <div class="when">2018 - 2020</div>
+                        <div class="extra">Mixtiles, Cycuro, PandaTS, Yopi</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Researcher @ Istra Research</h3>
+                        <div class="when">2014 - 2018</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Researcher @ Deshesoft</h3>
+                        <div class="when">2013 - 2014</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Algorithm Developer @ Tradologic</h3>
+                        <div class="when">2011 - 2013</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Lead &amp; Algorithm Developer @ Pulsar Investments</h3>
+                        <div class="when">2008 - 2011</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>Quantitative Developer @ SuperDerivatives</h3>
+                        <div class="when">2006 - 2008</div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Footer -->
-    <footer class="gradient-bg mt-12 text-white">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-center space-x-4">
+    <!-- Education -->
+    <section id="education">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> Education</span>
+                <h2>Academic background</h2>
+            </div>
+            <div class="card reveal">
+                <div class="timeline">
+                    <div class="t-item">
+                        <h3>M.B.A. @ Tel Aviv University</h3>
+                        <div class="when">2019 - 2021</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>M.Sc., Mathematics @ Weizmann Institute of Science</h3>
+                        <div class="when">2002 - 2004</div>
+                    </div>
+                    <div class="t-item">
+                        <h3>B.Sc., Mathematics &amp; Computer Science @ Tel Aviv University</h3>
+                        <div class="when">1998 - 2002</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <footer>
+        <div class="socials" style="background: transparent; border: 0;">
+            <a class="icon-btn" href="mailto:d@d85c.com" title="Email"><i class="fa-regular fa-envelope"></i></a>
+            <a class="icon-btn" href="tel:+972522444492" title="Phone"><i class="fa-solid fa-phone"></i></a>
+            <a class="icon-btn" href="https://wa.me/972522444492" target="_blank" rel="noopener" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a class="icon-btn" href="https://github.com/d-a-n-i" target="_blank" rel="noopener" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a class="icon-btn" href="https://www.linkedin.com/in/dani-cohen-8079673/" target="_blank" rel="noopener" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="icon-btn" href="https://www.instagram.com/howi_tzer/" target="_blank" rel="noopener" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a class="icon-btn" href="https://fb.com/dani.chn" target="_blank" rel="noopener" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="icon-btn" href="https://www.youtube.com/@DaniCohenB" target="_blank" rel="noopener" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <div class="copy">© <span id="year"></span> Dani Cohen</div>
     </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const countries = [
+            { name: "United States", code: "us", lat: 39.8, lng: -98.5 },
+            { name: "United Kingdom", code: "gb", lat: 54.5, lng: -2.5 },
+            { name: "Ireland",       code: "ie", lat: 53.3, lng: -7.7 },
+            { name: "France",        code: "fr", lat: 46.2, lng: 2.2 },
+            { name: "Germany",       code: "de", lat: 51.2, lng: 10.5 },
+            { name: "Netherlands",   code: "nl", lat: 52.1, lng: 5.3 },
+            { name: "Poland",        code: "pl", lat: 51.9, lng: 19.1 },
+            { name: "Romania",       code: "ro", lat: 45.9, lng: 24.9 },
+            { name: "Lithuania",     code: "lt", lat: 55.2, lng: 23.9 },
+            { name: "Latvia",        code: "lv", lat: 56.9, lng: 24.6 },
+            { name: "Finland",       code: "fi", lat: 61.9, lng: 25.7 },
+            { name: "Bulgaria",      code: "bg", lat: 42.7, lng: 25.5 },
+            { name: "North Macedonia", code: "mk", lat: 41.6, lng: 21.7 },
+            { name: "Greece",        code: "gr", lat: 39.1, lng: 21.8 },
+            { name: "Cyprus",        code: "cy", lat: 35.1, lng: 33.4 },
+            { name: "Turkey",        code: "tr", lat: 38.9, lng: 35.2 },
+            { name: "Israel",        code: "il", lat: 31.5, lng: 34.8 },
+            { name: "Ukraine",       code: "ua", lat: 48.4, lng: 31.2 },
+            { name: "Moldova",       code: "md", lat: 47.4, lng: 28.4 },
+            { name: "Czechia",       code: "cz", lat: 49.8, lng: 15.5 },
+            { name: "Slovakia",      code: "sk", lat: 48.7, lng: 19.7 },
+            { name: "Austria",       code: "at", lat: 47.5, lng: 14.5 },
+            { name: "Georgia",       code: "ge", lat: 42.3, lng: 43.4 },
+            { name: "Armenia",       code: "am", lat: 40.1, lng: 45.0 },
+            { name: "UAE",           code: "ae", lat: 23.4, lng: 53.8 },
+            { name: "Italy",         code: "it", lat: 41.9, lng: 12.6 },
+            { name: "Malta",         code: "mt", lat: 35.9, lng: 14.4 },
+            { name: "Hungary",       code: "hu", lat: 47.2, lng: 19.5 },
+            { name: "Serbia",        code: "rs", lat: 44.0, lng: 21.0 },
+            { name: "Switzerland",   code: "ch", lat: 46.8, lng: 8.2 },
+            { name: "Russia",        code: "ru", lat: 55.7, lng: 37.6 }
+        ];
+
+        document.getElementById('stat-countries').textContent = countries.length;
+
+        const chips = document.getElementById('chips');
+        countries
+            .slice()
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .forEach(c => {
+                const el = document.createElement('span');
+                el.className = 'chip';
+                el.innerHTML = `<img src="https://flagcdn.com/${c.code}.svg" alt="${c.name}"> ${c.name}`;
+                chips.appendChild(el);
+            });
+
+        const map = L.map('map', {
+            zoomControl: true,
+            scrollWheelZoom: false,
+            worldCopyJump: true,
+            attributionControl: true
+        }).setView([42, 18], 3);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 8,
+            minZoom: 2
+        }).addTo(map);
+
+        const pinIcon = L.divIcon({
+            className: '',
+            html: '<div class="country-pin"></div>',
+            iconSize: [14, 14],
+            iconAnchor: [7, 7]
+        });
+
+        countries.forEach(c => {
+            const m = L.marker([c.lat, c.lng], { icon: pinIcon, title: c.name }).addTo(map);
+            m.bindPopup(
+                `<div style="display:flex;align-items:center;gap:8px;">
+                    <img src="https://flagcdn.com/${c.code}.svg" alt="${c.name}" style="width:22px;height:16px;border-radius:2px;object-fit:cover;">
+                    <strong>${c.name}</strong>
+                 </div>`
+            );
+        });
+
+        const bounds = L.latLngBounds(countries.map(c => [c.lat, c.lng]));
+        map.fitBounds(bounds, { padding: [30, 30] });
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    </script>
 </body>
 </html>
