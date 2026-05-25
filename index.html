@@ -138,8 +138,67 @@
         /* ---------- Hero ---------- */
         header.hero {
             position: relative;
-            padding: 80px 24px 56px;
+            padding: 56px 24px 40px;
             text-align: center;
+        }
+        @media (max-width: 520px) {
+            header.hero { padding: 40px 20px 28px; }
+        }
+
+        /* QR badge */
+        .qr-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 5;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 8px 6px;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid rgba(110,168,255,.25);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,.05),
+                0 14px 30px -12px rgba(110,168,255,.35),
+                0 6px 14px -6px rgba(0,0,0,.45);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+        .qr-badge:hover {
+            transform: translateY(-2px) rotate(-1deg);
+            border-color: rgba(110,168,255,.55);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,.05),
+                0 20px 36px -12px rgba(110,168,255,.55),
+                0 8px 18px -6px rgba(0,0,0,.5);
+        }
+        .qr-badge img {
+            width: 88px;
+            height: 88px;
+            display: block;
+            border-radius: 6px;
+        }
+        .qr-badge .qr-cap {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            color: #0b1020;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .qr-badge .qr-cap i { color: #6ea8ff; font-size: 9px; }
+        @media (max-width: 640px) {
+            .qr-badge { top: 10px; right: 10px; padding: 6px 6px 4px; border-radius: 12px; }
+            .qr-badge img { width: 64px; height: 64px; }
+            .qr-badge .qr-cap { font-size: 8px; letter-spacing: .16em; }
+        }
+        @media (max-width: 380px) {
+            .qr-badge img { width: 54px; height: 54px; }
+            .qr-badge .qr-cap { display: none; }
         }
         .avatar-wrap {
             display: inline-block;
@@ -152,7 +211,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .avatar {
-            width: 180px; height: 180px;
+            width: 150px; height: 150px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid #0a0f25;
@@ -160,11 +219,11 @@
             animation: spin 8s linear infinite reverse;
         }
         @media (max-width: 520px) {
-            .avatar { width: 140px; height: 140px; }
+            .avatar { width: 120px; height: 120px; }
         }
         .name {
-            margin: 28px 0 6px;
-            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            margin: 22px 0 4px;
+            font-size: clamp(2.2rem, 5.5vw, 3.6rem);
             font-weight: 700;
             background: linear-gradient(180deg, #ffffff 30%, #b9c3ee 100%);
             -webkit-background-clip: text;
@@ -173,8 +232,8 @@
         }
         .tagline {
             color: var(--text-dim);
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
-            margin: 0 0 22px;
+            font-size: clamp(.95rem, 1.4vw, 1.1rem);
+            margin: 0 0 18px;
         }
         .tagline .dot { color: var(--accent); margin: 0 8px; }
 
@@ -208,60 +267,79 @@
         }
         .icon-btn i { font-size: 18px; }
 
-        /* Hero socials: vertical list with harmonized handles */
+        /* Hero socials: compact 2-column grid with brand-tinted icons */
         .socials-list {
-            margin: 24px auto 0;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 12px;
+            margin: 22px auto 0;
+            max-width: 560px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            padding: 8px;
             border-radius: 18px;
             background: var(--card);
             border: 1px solid var(--card-border);
             backdrop-filter: blur(8px);
         }
+        @media (max-width: 520px) {
+            .socials-list { grid-template-columns: 1fr; max-width: 320px; }
+        }
         .social-row {
+            --brand: var(--accent);
             display: grid;
-            grid-template-columns: 28px 1fr auto;
+            grid-template-columns: 36px 1fr;
             align-items: center;
             gap: 12px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-radius: 12px;
             color: var(--text-dim);
-            transition: all .2s ease;
+            transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
             border: 1px solid transparent;
             text-align: left;
+            min-width: 0;
         }
         .social-row:hover {
-            background: rgba(255,255,255,.06);
+            background: rgba(255,255,255,.05);
             border-color: rgba(255,255,255,.10);
             color: white;
-            transform: translateX(2px);
+            transform: translateY(-1px);
         }
-        .social-row i.glyph {
-            color: var(--accent);
+        .social-row .glyph {
+            width: 36px; height: 36px;
+            display: grid; place-items: center;
+            border-radius: 10px;
+            background: color-mix(in srgb, var(--brand) 14%, transparent);
+            border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+            color: var(--brand);
             font-size: 16px;
-            text-align: center;
+            transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+        .social-row:hover .glyph {
+            background: var(--brand);
+            color: #0a0f25;
+            border-color: var(--brand);
+            box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--brand) 70%, transparent);
         }
         .social-row .handle {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
             font-weight: 500;
             letter-spacing: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        .social-row .platform {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--muted);
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            opacity: .85;
-        }
-        .social-row:hover .platform { color: var(--accent); }
+        .social-row[data-brand="email"]     { --brand: #6ea8ff; }
+        .social-row[data-brand="phone"]     { --brand: #20e3b2; }
+        .social-row[data-brand="whatsapp"]  { --brand: #25D366; }
+        .social-row[data-brand="github"]    { --brand: #b9c3ee; }
+        .social-row[data-brand="linkedin"]  { --brand: #4a9bff; }
+        .social-row[data-brand="instagram"] { --brand: #e1306c; }
+        .social-row[data-brand="facebook"]  { --brand: #4267B2; }
+        .social-row[data-brand="youtube"]   { --brand: #ff5a5a; }
 
         /* ---------- Sections ---------- */
-        section { padding: 56px 24px; position: relative; }
+        section { padding: 44px 24px; position: relative; }
+        @media (max-width: 520px) { section { padding: 36px 20px; } }
         .section-head {
             display: flex; align-items: center; gap: 14px;
             margin-bottom: 28px;
@@ -742,6 +820,14 @@
 
     <!-- Hero -->
     <header id="top" class="hero">
+        <a class="qr-badge" href="https://d85c.com" target="_blank" rel="noopener" title="Scan or click to visit d85c.com" aria-label="QR code linking to d85c.com">
+            <img
+                src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fd85c.com&size=240x240&format=svg&margin=1&ecc=M"
+                alt="QR code for d85c.com"
+                loading="lazy"
+                width="88" height="88">
+            <span class="qr-cap"><i class="fa-solid fa-qrcode"></i> d85c.com</span>
+        </a>
         <div class="container">
             <div class="avatar-wrap">
                 <img class="avatar" src="profile.jpg" alt="Dani Cohen" loading="eager">
@@ -752,45 +838,37 @@
             </p>
 
             <div class="socials-list" aria-label="Contact and social links">
-                <a class="social-row" href="mailto:d@d85c.com" title="Email">
-                    <i class="glyph fa-regular fa-envelope"></i>
+                <a class="social-row" data-brand="email" href="mailto:d@d85c.com" title="Email">
+                    <span class="glyph"><i class="fa-regular fa-envelope"></i></span>
                     <span class="handle">d@d85c.com</span>
-                    <span class="platform">Email</span>
                 </a>
-                <a class="social-row" href="tel:+972522444492" title="Phone">
-                    <i class="glyph fa-solid fa-phone"></i>
-                    <span class="handle">+972-52-244-4492</span>
-                    <span class="platform">Phone</span>
-                </a>
-                <a class="social-row" href="https://wa.me/972522444492" target="_blank" rel="noopener" title="WhatsApp">
-                    <i class="glyph fa-brands fa-whatsapp"></i>
-                    <span class="handle">+972-52-244-4492</span>
-                    <span class="platform">WhatsApp</span>
-                </a>
-                <a class="social-row" href="https://github.com/d-a-n-i" target="_blank" rel="noopener" title="GitHub">
-                    <i class="glyph fa-brands fa-github"></i>
+                <a class="social-row" data-brand="github" href="https://github.com/d-a-n-i" target="_blank" rel="noopener" title="GitHub">
+                    <span class="glyph"><i class="fa-brands fa-github"></i></span>
                     <span class="handle">@d-a-n-i</span>
-                    <span class="platform">GitHub</span>
                 </a>
-                <a class="social-row" href="https://www.linkedin.com/in/dani-cohen-8079673/" target="_blank" rel="noopener" title="LinkedIn">
-                    <i class="glyph fa-brands fa-linkedin-in"></i>
+                <a class="social-row" data-brand="phone" href="tel:+972522444492" title="Phone">
+                    <span class="glyph"><i class="fa-solid fa-phone"></i></span>
+                    <span class="handle">+972-52-244-4492</span>
+                </a>
+                <a class="social-row" data-brand="linkedin" href="https://www.linkedin.com/in/dani-cohen-8079673/" target="_blank" rel="noopener" title="LinkedIn">
+                    <span class="glyph"><i class="fa-brands fa-linkedin-in"></i></span>
                     <span class="handle">dani-cohen</span>
-                    <span class="platform">LinkedIn</span>
                 </a>
-                <a class="social-row" href="https://www.instagram.com/howi_tzer/" target="_blank" rel="noopener" title="Instagram">
-                    <i class="glyph fa-brands fa-instagram"></i>
+                <a class="social-row" data-brand="whatsapp" href="https://wa.me/972522444492" target="_blank" rel="noopener" title="WhatsApp">
+                    <span class="glyph"><i class="fa-brands fa-whatsapp"></i></span>
+                    <span class="handle">+972-52-244-4492</span>
+                </a>
+                <a class="social-row" data-brand="instagram" href="https://www.instagram.com/howi_tzer/" target="_blank" rel="noopener" title="Instagram">
+                    <span class="glyph"><i class="fa-brands fa-instagram"></i></span>
                     <span class="handle">@howi_tzer</span>
-                    <span class="platform">Instagram</span>
                 </a>
-                <a class="social-row" href="https://fb.com/dani.chn" target="_blank" rel="noopener" title="Facebook">
-                    <i class="glyph fa-brands fa-facebook-f"></i>
-                    <span class="handle">dani.chn</span>
-                    <span class="platform">Facebook</span>
-                </a>
-                <a class="social-row" href="https://www.youtube.com/@DaniCohenB" target="_blank" rel="noopener" title="YouTube">
-                    <i class="glyph fa-brands fa-youtube"></i>
+                <a class="social-row" data-brand="youtube" href="https://www.youtube.com/@DaniCohenB" target="_blank" rel="noopener" title="YouTube">
+                    <span class="glyph"><i class="fa-brands fa-youtube"></i></span>
                     <span class="handle">@DaniCohenB</span>
-                    <span class="platform">YouTube</span>
+                </a>
+                <a class="social-row" data-brand="facebook" href="https://fb.com/dani.chn" target="_blank" rel="noopener" title="Facebook">
+                    <span class="glyph"><i class="fa-brands fa-facebook-f"></i></span>
+                    <span class="handle">dani.chn</span>
                 </a>
             </div>
         </div>
@@ -838,7 +916,7 @@
                         <div class="ico"><i class="fa-solid fa-plane-departure"></i></div>
                         <div>
                             <h3>Travelling</h3>
-                            <p><a href="#travel">See where I've been</a> - 28 countries and counting.</p>
+                            <p><a href="#travel">See where I've been</a> - 31 countries and counting.</p>
                         </div>
                     </div>
                     <div class="interest">
@@ -922,13 +1000,13 @@
                     <div class="thumb">
                         <img
                             src="https://image.thum.io/get/width/800/crop/600/https://packmate.d85c.com/"
-                            alt="Packmate screenshot"
+                            alt="PackMate screenshot"
                             loading="lazy"
                             referrerpolicy="no-referrer"
                             onerror="this.onerror=null;this.src='https://s.wordpress.com/mshots/v1/https%3A%2F%2Fpackmate.d85c.com?w=800&amp;h=500'">
                     </div>
                     <div class="body">
-                        <h3><i class="fa-solid fa-suitcase-rolling" style="color:var(--accent)"></i> Packmate</h3>
+                        <h3><i class="fa-solid fa-suitcase-rolling" style="color:var(--accent)"></i> PackMate</h3>
                         <p>A trip packing helper that builds the perfect list for any journey.</p>
                         <div class="meta">
                             <span class="tag">Web</span>
