@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מפוטושופ לאינדיזיין · העברת טקסטים חיים</title>
-<meta name="description" content="כלי שמייצר שני סקריפטים - אחד לפוטושופ ואחד לאינדיזיין - שמעבירים את כל שכבות הטקסט במכה אחת, כולל מיקום מדויק, פונט, גודל, צבע ו-RTL מלא לעברית.">
+<title>מפוטושופ לאינדיזיין · סקריפט אחד, אוטומטי לגמרי</title>
+<meta name="description" content="סקריפט יחיד שרץ באינדיזיין: מזהה את כל קבצי הפוטושופ המקושרים ואת העמוד שלהם, שולף מכל אחד את שכבות הטקסט ובונה אותן חיות בדיוק במקום הנכון - כולל RTL מלא לעברית.">
 <meta name="theme-color" content="#07091a">
-<meta property="og:title" content="מפוטושופ לאינדיזיין · העברת טקסטים חיים">
-<meta property="og:description" content="שני סקריפטים שמעבירים את כל הטקסטים במכה אחת - עם RTL אמיתי, עוגן לקצה הימני, פונט, גודל וצבע.">
+<meta property="og:title" content="מפוטושופ לאינדיזיין · סקריפט אחד, אוטומטי לגמרי">
+<meta property="og:description" content="רצים מתוך אינדיזיין בלבד: הסקריפט מוצא את כל קבצי הפוטושופ המקושרים ואת העמוד שלהם, ומעביר את הטקסט החי ישירות - עם RTL אמיתי, פונט, גודל וצבע.">
 <meta property="og:locale" content="he_IL">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127912;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -95,11 +95,11 @@ section{padding:34px 24px;position:relative}
 .grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--text-dim);margin-bottom:6px}
 .field .hint{display:block;font-size:11.5px;color:var(--muted);font-weight:400;margin-top:4px;line-height:1.5}
-select,input[type=text],input[type=number],textarea{
+select,input[type=text],input[type=number]{
   width:100%;padding:9px 12px;border-radius:10px;color:var(--text);
   background:rgba(8,11,28,.65);border:1px solid var(--card-border);
   font-family:inherit;font-size:14px;transition:border-color .2s,box-shadow .2s}
-select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
+select:focus,input:focus{outline:none;border-color:var(--accent);
   box-shadow:0 0 0 3px rgba(110,168,255,.18)}
 select option{background:#0b1020;color:var(--text)}
 .switch-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;
@@ -150,45 +150,6 @@ kbd{font-family:var(--mono);font-size:12px;display:inline-block;
 .note.info{background:rgba(110,168,255,.08);border-color:rgba(110,168,255,.28);color:#cfe0ff}
 .note b{color:#fff}
 
-/* ---- preview ---- */
-.preview-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:18px;align-items:start}
-@media(max-width:900px){.preview-grid{grid-template-columns:1fr}}
-.page-mock{position:relative;background:#fdfdfb;border-radius:8px;width:100%;
-  max-height:72vh;margin:0 auto;
-  box-shadow:0 18px 44px -14px rgba(0,0,0,.7);overflow:hidden;
-  background-image:linear-gradient(rgba(0,0,0,.045) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(0,0,0,.045) 1px,transparent 1px);
-  background-size:24px 24px}
-.mock-box{position:absolute;border:1px solid rgba(110,168,255,.85);
-  background:rgba(110,168,255,.07);color:#141a2e;overflow:hidden;
-  padding:1px 2px;line-height:1.25}
-.mock-box.pt{border-style:dashed;border-color:rgba(255,110,199,.9);background:rgba(255,110,199,.07)}
-.mock-box .t{display:block;overflow:hidden;word-break:break-word}
-.mock-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
-.mock-legend i{display:inline-block;width:22px;height:0;border-top:2px solid var(--accent);
-  vertical-align:middle;margin-left:6px}
-.mock-legend i.pt{border-top-style:dashed;border-top-color:#ff6ec7}
-.stats{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:12px}
-.stat .num{font-size:1.5rem;font-weight:800;background:var(--grad);
-  direction:ltr;unicode-bidi:isolate;
-  -webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
-.stat .lbl{font-size:11px;letter-spacing:.1em;color:var(--muted)}
-table.layers{width:100%;border-collapse:collapse;font-size:12.5px}
-table.layers th,table.layers td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:right}
-table.layers th{color:var(--muted);font-weight:600;font-size:11px;letter-spacing:.06em;position:sticky;top:0;background:#0c1226}
-table.layers td.n{font-family:var(--mono);direction:ltr;unicode-bidi:isolate;
-  text-align:left;color:var(--text-dim);font-size:11.5px}
-/* שמות שכבות מגיעים בעברית, באנגלית או מעורבים - plaintext בוחר כיוון לכל תא */
-table.layers td.name{unicode-bidi:plaintext;text-align:right;color:var(--text-dim);font-size:12px}
-table.layers td.txt{max-width:180px;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap;unicode-bidi:plaintext}
-.table-wrap{max-height:330px;overflow:auto;border:1px solid var(--card-border);border-radius:12px}
-textarea#tsv{min-height:120px;font-family:var(--mono);font-size:11.5px;direction:ltr;
-  text-align:left;white-space:pre;line-height:1.5}
-.status{font-size:13px;margin-top:10px;color:var(--text-dim);min-height:20px}
-.status.err{color:#ff9ea0}
-.status.good{color:#9df3dc}
-
 /* ---- faq ---- */
 details{border:1px solid var(--card-border);border-radius:14px;background:rgba(255,255,255,.03);
   padding:0 16px;margin-bottom:10px}
@@ -217,9 +178,7 @@ footer a:hover{color:#fff}
     <a class="brand" href="https://d85c.com"><span class="brand-mark">DC</span><span>d85c</span></a>
     <div class="nav-links">
       <a href="#settings">הגדרות</a>
-      <a href="#step1">שלב 1 · פוטושופ</a>
-      <a href="#step2">שלב 2 · אינדיזיין</a>
-      <a href="#preview">תצוגה מקדימה</a>
+      <a href="#step">הסקריפט</a>
       <a href="#faq">תקלות</a>
     </div>
   </div>
@@ -228,15 +187,19 @@ footer a:hover{color:#fff}
 <header class="hero">
   <div class="container">
     <span class="eyebrow">🎨 פוטושופ → אינדיזיין</span>
-    <h1>העברת טקסטים חיים במכה אחת<br>כולל RTL אמיתי</h1>
+    <h1>סקריפט אחד באינדיזיין<br>שעושה הכל אוטומטית</h1>
     <p class="lede">
-      מייצרים כאן שני סקריפטים: אחד שמייצא את כל שכבות הטקסט מפוטושופ,
-      ואחד שבונה אותן מחדש באינדיזיין — במיקום הנכון, עם הפונט, הגודל, הצבע והיישור,
-      ועם כיוון מימין לשמאל שמוגדר מראש. בלי להעתיק שכבה־שכבה.
+      לא מריצים כלום בפוטושופ, ולא מעתיקים קובץ TXT בין התוכנות.
+      מריצים סקריפט יחיד מתוך אינדיזיין: הוא סורק את כל קבצי הפוטושופ
+      המקושרים במסמך, מזהה לאיזה עמוד כל אחד מהם שייך, ואז - עבור כל
+      קובץ - פונה לפוטושופ ברקע, שולף ממנו את כל שכבות הטקסט, וסוגר
+      אותו בחזרה. התוצאה: תיבות טקסט חיות בדיוק במקום הנכון על כל
+      עמוד, עם פונט, גודל, צבע, יישור, ו-RTL אמיתי לעברית.
     </p>
     <p class="credit">
       מבוסס על <a href="https://www.noakatz.net/post/%D7%94%D7%A2%D7%91%D7%A8%D7%AA-%D7%98%D7%A7%D7%A1%D7%98%D7%99%D7%9D-%D7%97%D7%99%D7%99%D7%9D-%D7%A8%D7%91%D7%99%D7%9D-%D7%9E%D7%A4%D7%95%D7%98%D7%A9%D7%95%D7%A4-%D7%9C%D7%90%D7%99%D7%A0%D7%93%D7%99%D7%96%D7%99%D7%99%D7%9F-%D7%97%D7%9C%D7%A7-%D7%A9%D7%A0%D7%99-%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A" target="_blank" rel="noopener">המדריך של נועה כץ</a>,
-      עם ההמשך שהיא הזמינה לעשות: קואורדינטות מהקצה הימני, ו־RTL, פונט וגודל ישירות מתוך הסקריפט.
+      עם ההמשך שהיא הזמינה לעשות - הפעם כסקריפט יחיד שמריץ את שתי התוכנות
+      יחד דרך BridgeTalk, בלי שלב ידני של ייצוא/ייבוא קובץ.
     </p>
   </div>
 </header>
@@ -245,19 +208,19 @@ footer a:hover{color:#fff}
   <div class="container">
     <div class="flow">
       <div class="flow-item">
-        <div class="ico">🖼️</div>
-        <h3>מריצים בפוטושופ</h3>
-        <p>הסקריפט סורק את כל שכבות הטקסט ושומר קובץ TXT עם המיקומים והעיצוב.</p>
+        <div class="ico">🔎</div>
+        <h3>1. הסקריפט סורק את אינדיזיין</h3>
+        <p>מוצא את כל קבצי הפוטושופ המקושרים במסמך (File&nbsp;&gt;&nbsp;Place), ולאיזה עמוד כל אחד מהם שייך.</p>
       </div>
       <div class="flow-item">
-        <div class="ico">⚙️</div>
-        <h3>מכווננים כאן</h3>
-        <p>בוחרים פונט, יישור, עוגן ואוטו־סייז — והסקריפט לאינדיזיין נבנה לפי זה.</p>
+        <div class="ico">🌉</div>
+        <h3>2. פונה לפוטושופ ברקע</h3>
+        <p>דרך BridgeTalk - תקשורת ישירה בין תוכנות אדובי על אותו מחשב. פוטושופ נפתח אוטומטית אם צריך.</p>
       </div>
       <div class="flow-item">
         <div class="ico">📄</div>
-        <h3>מריצים באינדיזיין</h3>
-        <p>נוצרות תיבות טקסט חיות בשכבה נפרדת, מוכנות לעריכה.</p>
+        <h3>3. התיבות נוצרות לבד</h3>
+        <p>כל שכבת טקסט הופכת לתיבת טקסט חיה, בשכבה נפרדת, במיקום הנכון על העמוד המתאים.</p>
       </div>
     </div>
   </div>
@@ -278,7 +241,7 @@ footer a:hover{color:#fff}
             <option value="right" selected>הקצה הימני — מומלץ לעברית</option>
             <option value="left">הקצה השמאלי — כמו במקור</option>
           </select>
-          <span class="hint">עוגן ימני שומר על המרחק מהשוליים הימניים, גם אם עמוד האינדיזיין ברוחב אחר.</span>
+          <span class="hint">עוגן ימני שומר על המרחק מהשוליים הימניים של המסגרת, גם אם הפוטושופ מוצג בקנה מידה שונה.</span>
         </div>
 
         <div class="field">
@@ -335,122 +298,49 @@ footer a:hover{color:#fff}
         </div>
       </div>
       <div class="note info" style="margin-top:18px">
-        <b>הגדרות משתנות → הסקריפט של שלב 2 מתעדכן מיד.</b>
+        <b>הגדרות משתנות → הסקריפט למטה מתעדכן מיד.</b>
         אפשר גם לשנות אותן ידנית בראש הקובץ, בבלוק <kbd>var CFG</kbd>.
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ STEP 1 ============ -->
-<section id="step1">
+<!-- ============ STEP ============ -->
+<section id="step">
   <div class="container">
-    <div class="section-head"><span class="step-num">1</span><h2>הסקריפט לפוטושופ</h2></div>
+    <div class="section-head"><span class="step-num">1</span><h2>הסקריפט - להריץ פעם אחת מתוך אינדיזיין</h2></div>
 
     <div class="card">
       <div class="code-head">
-        <span class="code-name">export_text_layers.jsx</span>
+        <span class="code-name">sync_photoshop_text.jsx</span>
         <div class="btns">
-          <button class="btn" id="psExpand">הצג הכל</button>
-          <button class="btn" id="psCopy">העתקה</button>
-          <button class="btn primary" id="psDl">הורדת ‎.jsx</button>
+          <button class="btn" id="syncExpand">הצג הכל</button>
+          <button class="btn" id="syncCopy">העתקה</button>
+          <button class="btn primary" id="syncDl">הורדת ‎.jsx</button>
         </div>
       </div>
-      <pre class="code collapsed" id="psCode"></pre>
+      <pre class="code collapsed" id="syncCode"></pre>
 
       <ol class="steps" style="margin-top:18px">
-        <li>מורידים את הקובץ (או פותחים עורך טקסט — <b>Notepad</b> בווינדוס, <b>TextEdit</b> במאק — ומדביקים את הקוד). חובה לשמור עם סיומת <kbd>.jsx</kbd>.</li>
-        <li>בפוטושופ, בחלון השכבות, לוחצים על ה־<kbd>T</kbd> כדי לסנן רק שכבות טקסט. מסמנים את כולן, לחיצה ימנית ← <kbd>Convert to Paragraph Text</kbd>.</li>
-        <li>מריצים: <kbd>File &gt; Scripts &gt; Browse…</kbd> ובוחרים את הסקריפט.</li>
-        <li>הסקריפט מבקש לשמור קובץ — שומרים אותו באותה תיקייה. יוצא קובץ <kbd>.txt</kbd> עם שורה לכל שכבה.</li>
+        <li>מורידים את הקובץ (או פותחים עורך טקסט ומדביקים את הקוד). חובה לשמור עם סיומת <kbd>.jsx</kbd>, ובקידוד <kbd>UTF-8</kbd>.</li>
+        <li>ודאו שפוטושופ מותקן על <b>אותו מחשב</b> שבו רץ אינדיזיין. לא חייבים לפתוח אותו מראש - הסקריפט יפעיל אותו ברקע לפי הצורך.</li>
+        <li>באינדיזיין: <kbd>Window &gt; Utilities &gt; Scripts</kbd>, לחיצה ימנית על תיקיית <kbd>User</kbd> ← <kbd>Reveal in Finder</kbd> (מאק) או <kbd>Reveal in Explorer</kbd> (ווינדוס), ומעתיקים לשם את הקובץ.</li>
+        <li>פותחים את מסמך האינדיזיין שבו קבצי הפוטושופ מקושרים (<kbd>File &gt; Place</kbd> - לא הדבקה של תמונה שטוחה).</li>
+        <li>לחיצה כפולה על הסקריפט בפאנל ה־Scripts. הוא סורק את כל הקישורים, פותח כל קובץ פוטושופ ייחודי פעם אחת ברקע, ובונה את כל תיבות הטקסט על העמודים המתאימים - בפעולת Undo אחת.</li>
       </ol>
 
       <div class="note">
-        <b>טקסט נקודתי מול טקסט פסקה.</b>
-        לשכבות שנשארו Point Text הסקריפט ייקח את גבולות השכבה במקום את תיבת הפסקה —
-        זה עובד, אבל פחות מדויק. הוא יגיד לכם בסוף כמה כאלה נמצאו.
+        <b>למה חשוב שהמסגרת תתאים לתמונה.</b>
+        המיקום של כל שכבת טקסט מחושב לפי הגודל בפועל של המסגרת שבה הונחה
+        תמונת הפוטושופ בעמוד. אם התמונה חתוכה בתוך מסגרת שיחס הממדים
+        שלה שונה מיחס הממדים המקורי - המיקום עלול לסטות. הסקריפט מזהיר
+        על זה בסיום.
       </div>
       <div class="note info">
-        <b>מה בפנים:</b> שם, מיקום מצד שמאל <em>ומצד ימין</em>, רוחב, גובה, פונט, גודל,
-        ריווח שורות, מרווח אותיות, יישור, צבע, שקיפות, נראוּת והטקסט עצמו.
-        תיקיות שכבות נתמכות (השם יכלול את הנתיב).
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STEP 2 ============ -->
-<section id="step2">
-  <div class="container">
-    <div class="section-head"><span class="step-num">2</span><h2>הסקריפט לאינדיזיין</h2></div>
-
-    <div class="card">
-      <div class="code-head">
-        <span class="code-name">import_text_indesign.jsx</span>
-        <div class="btns">
-          <button class="btn" id="idExpand">הצג הכל</button>
-          <button class="btn" id="idCopy">העתקה</button>
-          <button class="btn primary" id="idDl">הורדת ‎.jsx</button>
-        </div>
-      </div>
-      <pre class="code collapsed" id="idCode"></pre>
-
-      <ol class="steps" style="margin-top:18px">
-        <li>פותחים באינדיזיין מסמך חדש — עדיף באותו גודל כמו הקובץ בפוטושופ.</li>
-        <li>פותחים <kbd>Window &gt; Utilities &gt; Scripts</kbd>.</li>
-        <li>לחיצה ימנית על תיקיית <kbd>User</kbd> ← <kbd>Reveal in Finder</kbd> (מאק) או <kbd>Reveal in Explorer</kbd> (ווינדוס), ומעתיקים לשם את הקובץ.</li>
-        <li>הוא יופיע בחלון ה־Scripts. לחיצה כפולה, בוחרים את קובץ ה־TXT מפוטושופ — וזהו.</li>
-      </ol>
-
-      <div class="note info">
-        <b>הכל נוחת בשכבה נפרדת</b> בשם שבחרתם, וכל הייבוא הוא פעולת Undo אחת —
-        <kbd>Ctrl/Cmd + Z</kbd> מנקה הכל אם לא אהבתם.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PREVIEW ============ -->
-<section id="preview">
-  <div class="container">
-    <div class="section-head"><span class="step-num">👁</span><h2>תצוגה מקדימה</h2></div>
-
-    <div class="card">
-      <p style="margin-top:0;color:var(--text-dim);font-size:.95rem">
-        מדביקים כאן את תוכן קובץ ה־TXT שיצא מפוטושופ, ורואים איפה בדיוק כל תיבה תיפול —
-        לפני שנוגעים באינדיזיין.
-      </p>
-      <textarea id="tsv" placeholder="#PSTEXT&#10;#DOC ..." spellcheck="false"></textarea>
-      <div class="btns" style="margin-top:10px">
-        <button class="btn primary" id="parseBtn">נתח והצג</button>
-        <button class="btn" id="demoBtn">טעינת דוגמה</button>
-        <button class="btn" id="clearBtn">ניקוי</button>
-      </div>
-      <div class="status" id="status"></div>
-
-      <div id="previewOut" style="display:none;margin-top:20px">
-        <div class="stats">
-          <div class="stat"><div class="num" id="stLayers">0</div><div class="lbl">שכבות</div></div>
-          <div class="stat"><div class="num" id="stSize">—</div><div class="lbl">גודל מסמך</div></div>
-          <div class="stat"><div class="num" id="stRes">—</div><div class="lbl">רזולוציה</div></div>
-          <div class="stat"><div class="num" id="stFonts">0</div><div class="lbl">פונטים</div></div>
-        </div>
-        <div class="preview-grid">
-          <div>
-            <div class="page-mock" id="mock"></div>
-            <div class="mock-legend">
-              <span><i></i>טקסט פסקה</span>
-              <span><i class="pt"></i>טקסט נקודתי</span>
-              <span id="anchorNote"></span>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table class="layers">
-              <thead><tr><th>שכבה</th><th>ימין</th><th>עליון</th><th>גודל</th><th>טקסט</th></tr></thead>
-              <tbody id="tbody"></tbody>
-            </table>
-          </div>
-        </div>
+        <b>מה עובר:</b> שם השכבה, מיקום מדויק (כולל המרה לגודל ולמיקום
+        האמיתיים של התמונה על העמוד), פונט, גודל, ריווח שורות, מרווח
+        אותיות, יישור, צבע, שקיפות, נראוּת והטקסט עצמו. תיקיות שכבות
+        ופוטושופ עם כמה הפניות לאותו קובץ נתמכים גם הם.
       </div>
     </div>
   </div>
@@ -462,33 +352,48 @@ footer a:hover{color:#fff}
     <div class="section-head"><span class="step-num">?</span><h2>כשמשהו לא עובד</h2></div>
 
     <details>
+      <summary>פוטושופ לא נפתח, או שהסקריפט נתקע ב"ממתין לפוטושופ"</summary>
+      <div class="body">
+        <p>הסקריפט מתקשר עם פוטושופ דרך <kbd>BridgeTalk</kbd> - תקשורת בין תוכנות
+        אדובי שרצות <b>על אותו מחשב בדיוק</b> (לא עובד מול מחשב אחר או שרת).
+        ודאו שפוטושופ מותקן מקומית ושהגרסה שלו נתמכת.</p>
+        <p>אם זה עדיין תקוע, נסו לפתוח את פוטושופ ידנית לפני הרצת הסקריפט,
+        ולוודא שאין חלונית התראה פתוחה בפוטושופ שממתינה ללחיצה (למשל
+        אזהרת קובץ פגום) - היא חוסמת את התגובה ל-InDesign.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>המיקום של הטקסט לא מדויק</summary>
+      <div class="body">
+        <p>המיקום מחושב לפי הגודל בפועל של המסגרת שבה מונחת תמונת הפוטושופ
+        בעמוד, ביחס לגודל ורזולוציית הקובץ המקורי. אם הוצג אזהרת
+        "יחס ממדים שונה" - סימן שהתמונה חתוכה בתוך המסגרת (fill/crop),
+        וההמרה לא תהיה מדויקת. הכי מדויק כשהמסגרת מותאמת לתמונה
+        במלואה (<kbd>Object &gt; Fitting &gt; Fit Frame to Content</kbd>).</p>
+        <p>מסגרות מסובבות גם מדווחות באזהרה נפרדת - הסקריפט לא מטפל
+        בסיבוב, רק במיקום/קנה מידה ישרים.</p>
+      </div>
+    </details>
+
+    <details>
       <summary>ה־RTL לא נתפס, והטקסט יוצא הפוך</summary>
       <div class="body">
         <p>הגדרות הכיוון קיימות רק באינדיזיין עם תמיכה במזרח התיכון (InDesign ME / World‑Ready).
-        הסקריפט מנסה להחיל אותן ב־<kbd>try</kbd> ולא נופל אם אין — הוא פשוט יגיד לכם בסוף.</p>
+        הסקריפט מנסה להחיל אותן ב־<kbd>try</kbd> ולא נופל אם אין - הוא פשוט יגיד לכם בסוף.</p>
         <p>אם קיבלתם את ההודעה הזו: <kbd>Type &gt; Story &gt; Direction &gt; Right to Left</kbd> ידנית,
         ו־<kbd>Paragraph panel &gt; Adobe World‑Ready Paragraph Composer</kbd>.</p>
       </div>
     </details>
 
     <details>
-      <summary>הטקסט יושב קצת בצד לעומת הפוטושופ</summary>
-      <div class="body">
-        <p>פוטושופ מודד את תיבת הפסקה, ואינדיזיין ממקם לפי הפריים. ההפרש הרגיל
-        מגיע מ־inset ומ־first baseline — הסקריפט כבר מאפס את שניהם
-        (<kbd>insetSpacing = 0</kbd>, <kbd>firstBaselineOffset = Cap Height</kbd>).</p>
-        <p>אם עדיין יש סטייה, בדרך כלל הפונט באינדיזיין לא זהה לזה שבפוטושופ. אפשר להגדיר
-        פונט אחיד בהגדרות למעלה.</p>
-      </div>
-    </details>
-
-    <details>
       <summary>למה בכלל עוגן ימני?</summary>
       <div class="body">
-        <p>הפלט של פוטושופ מודד מהפינה השמאלית העליונה. כשהעמוד באינדיזיין באותו רוחב בדיוק
-        זה יוצא אותו דבר. אבל ברגע שהרוחב שונה — או שהתיבה גדלה כי הפונט שונה —
-        בעברית אתם רוצים שהקצה <em>הימני</em> יישאר במקומו והטקסט יזלוג שמאלה.</p>
-        <p>לכן קובץ הייצוא כולל גם עמודת <kbd>xRight</kbd>, וסקריפט הייבוא נועל לפיה.</p>
+        <p>קובץ הפוטושופ נמדד מהפינה השמאלית העליונה שלו. כשהתמונה
+        ממלאת את המסגרת בדיוק זה לא משנה. אבל כשיש הבדל קטן בין
+        גודל התמונה לגודל המסגרת - בעברית רוצים שהקצה <em>הימני</em>
+        יישאר צמוד, והטקסט יזלוג שמאלה.</p>
+        <p>לכן החישוב הפנימי כולל גם את <kbd>xRight</kbd> - המרחק מהקצה הימני של כל שכבה - וממנו נגזר מיקום התיבה.</p>
       </div>
     </details>
 
@@ -502,11 +407,13 @@ footer a:hover{color:#fff}
     </details>
 
     <details>
-      <summary>חלק מהשכבות לא הגיעו</summary>
+      <summary>חלק מהשכבות או הקבצים לא הגיעו</summary>
       <div class="body">
-        <p>שכבות מוסתרות מדולגות כברירת מחדל — אפשר לבטל את זה בהגדרות.
-        גם שכבות טקסט ריקות מדולגות. שכבות בתוך תיקיות כן נתמכות,
-        ואפקטים כמו Warp Text לא מועברים.</p>
+        <p>שכבות מוסתרות מדולגות כברירת מחדל - אפשר לבטל את זה בהגדרות.
+        גם שכבות טקסט ריקות מדולגות. שכבות בתוך תיקיות כן נתמכות.</p>
+        <p>קבצי פוטושופ שמוקמו כתמונה מוטבעת (Embedded) ולא כקישור
+        (Linked), או שהודבקו כתמונה שטוחה מפוטושופ, לא נספרים כ"קובץ
+        פוטושופ מקושר" - צריך <kbd>File &gt; Place</kbd> על קובץ psd/psb בפועל.</p>
       </div>
     </details>
 
@@ -514,8 +421,8 @@ footer a:hover{color:#fff}
       <summary>אינדיזיין אומר שהפונט חסר</summary>
       <div class="body">
         <p>פוטושופ שומר שם PostScript (למשל <kbd>ArialMT</kbd>), ואינדיזיין רוצה משפחה,
-        תו טאב, וסגנון — כלומר <kbd>Arial<span style="opacity:.5">⇥</span>Regular</kbd>. כשאין התאמה
-        הסקריפט משאיר את פונט ברירת המחדל ומדפיס בסוף רשימה של כל מה שלא נמצא —
+        תו טאב, וסגנון - כלומר <kbd>Arial<span style="opacity:.5">⇥</span>Regular</kbd>. כשאין התאמה
+        הסקריפט משאיר את פונט ברירת המחדל ומדפיס בסוף רשימה של כל מה שלא נמצא -
         אפשר להעתיק את השם המדויק מ־<kbd>Type &gt; Font</kbd> ולהדביק בהגדרות.</p>
       </div>
     </details>
@@ -526,7 +433,7 @@ footer a:hover{color:#fff}
   <div class="container">
     <p style="margin:0 0 6px">
       מבוסס על <a href="https://www.noakatz.net/post/%D7%94%D7%A2%D7%91%D7%A8%D7%AA-%D7%98%D7%A7%D7%A1%D7%98%D7%99%D7%9D-%D7%97%D7%99%D7%99%D7%9D-%D7%A8%D7%91%D7%99%D7%9D-%D7%9E%D7%A4%D7%95%D7%98%D7%A9%D7%95%D7%A4-%D7%9C%D7%90%D7%99%D7%A0%D7%93%D7%99%D7%96%D7%99%D7%99%D7%9F-%D7%97%D7%9C%D7%A7-%D7%A9%D7%A0%D7%99-%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A" target="_blank" rel="noopener">המדריך של נועה כץ</a>
-      · הסקריפטים כאן נכתבו מחדש עם RTL ועוגן ימני
+      · הסקריפט כאן נכתב מחדש כתהליך אוטומטי אחד עם BridgeTalk, RTL ועוגן ימני
     </p>
     <p style="margin:0">
       <a href="https://d85c.com">d85c.com</a> ·
@@ -535,232 +442,34 @@ footer a:hover{color:#fff}
   </div>
 </footer>
 
-<!-- ======================= SOURCES ======================= -->
-<script type="text/plain" id="src-ps">
+<!-- ======================= SOURCE ======================= -->
+<script type="text/plain" id="src-sync">
 /*
  * ============================================================
- *  שלב 1 - פוטושופ: ייצוא שכבות טקסט
- *  export_text_layers.jsx
+ *  sync_photoshop_text.jsx
  * ------------------------------------------------------------
- *  שומר קובץ TXT עם כל שכבות הטקסט של המסמך:
- *  מיקום (גם מצד שמאל וגם מצד ימין), גודל תיבה, פונט, גודל,
- *  ריווח שורות, מרווח אותיות, יישור, צבע והטקסט עצמו.
+ *  סקריפט יחיד שרץ באינדיזיין בלבד:
  *
- *  ה־xRight (מרחק מהקצה הימני) הוא מה שמאפשר לאינדיזיין
- *  להניח את הטקסט נכון בעברית, גם אם רוחב העמוד שונה.
+ *   1. סורק את כל הקבצים המקושרים (Links) במסמך האינדיזיין
+ *      ומאתר את כל אלה שהם קובצי פוטושופ (.psd / .psb),
+ *      ולאיזה עמוד כל אחד מהם מקושר.
+ *   2. עבור כל קובץ פוטושופ, שולח פקודה לפוטושופ עצמו (דרך
+ *      BridgeTalk) שפותחת את הקובץ, אוספת את כל שכבות הטקסט
+ *      שבו, וסוגרת אותו בחזרה - בלי לגעת בממשק.
+ *   3. בונה באינדיזיין תיבות טקסט חיות במיקום הנכון על גבי
+ *      העמוד המתאים, לפי המקום והגודל שבו התמונה מונחת בפועל -
+ *      כולל פונט, גודל, צבע, יישור ו-RTL.
  *
- *  הפעלה:  File > Scripts > Browse...
- *  https://d85c.com/indi_ps
- * ============================================================
- */
-
-#target photoshop
-
-(function () {
-
-    if (app.documents.length === 0) {
-        alert("צריך מסמך פתוח בפוטושופ.");
-        return;
-    }
-
-    var doc = app.activeDocument;
-
-    var prevRuler = app.preferences.rulerUnits;
-    var prevType  = app.preferences.typeUnits;
-    app.preferences.rulerUnits = Units.PIXELS;
-    app.preferences.typeUnits  = TypeUnits.POINTS;
-
-    var docW = 0, docH = 0, res = 72;
-    var rows = [];
-    var found = 0;
-    var skippedPoint = 0;
-
-    /* ---------- עזרים ---------- */
-
-    function num(v) {
-        if (v === null || v === undefined || isNaN(v)) return "";
-        return String(Math.round(v * 100) / 100);
-    }
-
-    function esc(s) {
-        if (s === null || s === undefined) return "";
-        s = String(s);
-        s = s.replace(/\\/g, "\\\\");
-        s = s.replace(/\r\n/g, "\n");
-        s = s.replace(/[\r\u0003\u2028\u2029]/g, "\n");
-        s = s.replace(/\n/g, "\\n");
-        s = s.replace(/\t/g, "\\t");
-        return s;
-    }
-
-    function justName(j) {
-        var s = String(j);
-        var i = s.lastIndexOf(".");
-        if (i >= 0) s = s.substring(i + 1);
-        return s.toLowerCase();
-    }
-
-    function hexOf(ti) {
-        try { return ti.color.rgb.hexValue; } catch (e) { return ""; }
-    }
-
-    /* ---------- איסוף ---------- */
-
-    function collect(container, path) {
-        var i, j;
-
-        for (i = 0; i < container.artLayers.length; i++) {
-            var L = container.artLayers[i];
-            if (L.kind !== LayerKind.TEXT) continue;
-
-            var ti = L.textItem;
-            var x, y, w, h, isPara = false;
-
-            try { isPara = (ti.kind === TextType.PARAGRAPHTEXT); } catch (e0) { isPara = false; }
-
-            if (isPara) {
-                try {
-                    x = ti.position[0].as("px");
-                    y = ti.position[1].as("px");
-                    w = ti.width.as("px");
-                    h = ti.height.as("px");
-                } catch (e1) {
-                    isPara = false;
-                }
-            }
-
-            if (!isPara) {
-                /* טקסט נקודתי - נופלים חזרה לגבולות השכבה */
-                skippedPoint++;
-                var b = L.bounds;
-                x = b[0].as("px");
-                y = b[1].as("px");
-                w = b[2].as("px") - x;
-                h = b[3].as("px") - y;
-            }
-
-            var size = "";
-            try { size = num(ti.size.as("pt")); } catch (e2) {}
-
-            var leading = "auto";
-            try {
-                if (!ti.useAutoLeading) leading = num(ti.leading.as("pt"));
-            } catch (e3) { leading = "auto"; }
-
-            var tracking = "0";
-            try { tracking = num(ti.tracking); } catch (e4) {}
-
-            var font = "";
-            try { font = ti.font; } catch (e5) {}
-
-            var just = "left";
-            try { just = justName(ti.justification); } catch (e6) {}
-
-            var opacity = "100";
-            try { opacity = num(L.opacity); } catch (e7) {}
-
-            rows.push([
-                esc(path + L.name),
-                num(x),
-                num(y),
-                num(w),
-                num(h),
-                num(docW - (x + w)),          /* xRight - המרחק מהקצה הימני */
-                esc(font),
-                size,
-                leading,
-                tracking,
-                just,
-                hexOf(ti),
-                opacity,
-                (L.visible ? "1" : "0"),
-                (isPara ? "para" : "point"),
-                esc(ti.contents)
-            ].join("\t"));
-
-            found++;
-        }
-
-        for (j = 0; j < container.layerSets.length; j++) {
-            var g = container.layerSets[j];
-            collect(g, path + g.name + "/");
-        }
-    }
-
-    /* ---------- הרצה ---------- */
-
-    try {
-        docW = doc.width.as("px");
-        docH = doc.height.as("px");
-        res  = doc.resolution;
-
-        rows.push("#PSTEXT\t2\thttps://d85c.com/indi_ps");
-        rows.push("#DOC\t" + num(docW) + "\t" + num(docH) + "\t" + num(res));
-        rows.push("#COLS\tname\tx\ty\tw\th\txRight\tfont\tsize\tleading\ttracking\tjustify\tcolor\topacity\tvisible\tkind\ttext");
-
-        collect(doc, "");
-
-        if (found === 0) {
-            alert("לא נמצאו שכבות טקסט במסמך.");
-            return;
-        }
-
-        /* מיון מלמעלה למטה, ומימין לשמאל */
-        var head = rows.slice(0, 3);
-        var body = rows.slice(3);
-        body.sort(function (a, b) {
-            var A = a.split("\t"), B = b.split("\t");
-            var dy = parseFloat(A[2]) - parseFloat(B[2]);
-            if (Math.abs(dy) > 4) return dy;
-            return parseFloat(B[1]) - parseFloat(A[1]);
-        });
-        rows = head.concat(body);
-
-        var suggested;
-        try {
-            suggested = new File(doc.path + "/" + doc.name.replace(/\.[^.]+$/, "") + "_text.txt");
-        } catch (ePath) {
-            suggested = new File(Folder.desktop + "/ps_text.txt");
-        }
-
-        var f = suggested.saveDlg("שמרו את קובץ הטקסט");
-        if (!f) return;
-        if (!/\.txt$/i.test(f.fsName)) f = new File(f.fsName + ".txt");
-
-        f.encoding = "UTF-8";
-        f.lineFeed = "Unix";
-        if (!f.open("w")) { alert("לא הצלחתי לפתוח את הקובץ לכתיבה."); return; }
-        f.write("﻿" + rows.join("\n") + "\n");
-        f.close();
-
-        var msg = "נשמרו " + found + " שכבות טקסט.\n" + f.fsName;
-        if (skippedPoint > 0) {
-            msg += "\n\n⚠ " + skippedPoint + " שכבות הן טקסט נקודתי (point text).\n" +
-                   "לתוצאה מדויקת יותר: לחיצה ימנית על השכבה > Convert to Paragraph Text, ולהריץ שוב.";
-        }
-        alert(msg);
-
-    } catch (err) {
-        alert("שגיאה: " + err.message + "\nשורה: " + err.line);
-    } finally {
-        app.preferences.rulerUnits = prevRuler;
-        app.preferences.typeUnits  = prevType;
-    }
-
-})();
-</script>
-<script type="text/plain" id="src-id">
-/*
- * ============================================================
- *  שלב 2 - אינדיזיין: ייבוא שכבות הטקסט
- *  import_text_indesign.jsx
- * ------------------------------------------------------------
- *  קורא את קובץ ה־TXT שיצא מפוטושופ ובונה תיבות טקסט
- *  במיקום הנכון, עם פונט, גודל, צבע, יישור, ו־RTL מלא.
+ *  דרישות:
+ *   - פוטושופ ואינדיזיין חייבים לרוץ על אותו מחשב (BridgeTalk
+ *     היא תקשורת בין תוכנות אדובי מקומיות בלבד, לא דרך רשת).
+ *   - קובצי הפוטושופ צריכים להיות ממוקמים ב-File > Place
+ *     (Link), לא מודבקים כתמונה שטוחה.
+ *   - עובד הכי מדויק כשהמסגרת שבה הונחה התמונה תואמת ליחס
+ *     הממדים המקורי של קובץ הפוטושופ (בלי חיתוך פנימי).
  *
- *  התקנה:  Window > Utilities > Scripts  >  לחיצה ימנית על
- *          תיקיית User  >  Reveal in Finder / Explorer
- *          שמים שם את הקובץ, ואז לוחצים עליו פעמיים.
+ *  הפעלה:  Window > Utilities > Scripts > User  (להעתיק לשם
+ *          את הקובץ) > לחיצה כפולה על הסקריפט.
  *
  *  https://d85c.com/indi_ps
  * ============================================================
@@ -786,67 +495,189 @@ var CFG = {
 /* ======================================================== */
 
 
-function importPhotoshopText() {
+/* ============================================================
+ *  הפונקציה הזו לעולם לא רצה באינדיזיין - היא רק "מודפסת"
+ *  (toString) ונשלחת דרך BridgeTalk כדי לרוץ בתוך פוטושופ.
+ *  כל מה שבפנים הוא ExtendScript תקני של פוטושופ בלבד.
+ * ============================================================ */
+function psWorker(targetPath) {
+    function num(v) {
+        if (v === null || v === undefined || isNaN(v)) return "";
+        return String(Math.round(v * 100) / 100);
+    }
+    function esc(s) {
+        if (s === null || s === undefined) return "";
+        s = String(s);
+        s = s.replace(/\\/g, "\\\\");
+        s = s.replace(/\r\n/g, "\n");
+        s = s.replace(/[\r\u0003\u2028\u2029]/g, "\n");
+        s = s.replace(/\n/g, "\\n");
+        s = s.replace(/\t/g, "\\t");
+        return s;
+    }
+    function justName(j) {
+        var s = String(j);
+        var i = s.lastIndexOf(".");
+        if (i >= 0) s = s.substring(i + 1);
+        return s.toLowerCase();
+    }
+    function hexOf(ti) {
+        try { return ti.color.rgb.hexValue; } catch (e) { return ""; }
+    }
+
+    var wasOpen = false, doc = null, di;
+    for (di = 0; di < app.documents.length; di++) {
+        try {
+            if (app.documents[di].fullName.fsName === targetPath) {
+                doc = app.documents[di];
+                wasOpen = true;
+                break;
+            }
+        } catch (eN) {}
+    }
+    if (!doc) {
+        try {
+            doc = app.open(new File(targetPath));
+        } catch (eOpen) {
+            return "ERR\t" + eOpen.message;
+        }
+    }
+    app.activeDocument = doc;
+
+    var prevRuler = app.preferences.rulerUnits;
+    var prevType  = app.preferences.typeUnits;
+    app.preferences.rulerUnits = Units.PIXELS;
+    app.preferences.typeUnits  = TypeUnits.POINTS;
+
+    var docW = 0, docH = 0, res = 72, rows = [], found = 0, skippedPoint = 0;
+
+    function collect(container, path) {
+        var i, j;
+        for (i = 0; i < container.artLayers.length; i++) {
+            var L = container.artLayers[i];
+            if (L.kind !== LayerKind.TEXT) continue;
+
+            var ti = L.textItem;
+            var x, y, w, h, isPara = false;
+
+            try { isPara = (ti.kind === TextType.PARAGRAPHTEXT); } catch (e0) { isPara = false; }
+
+            if (isPara) {
+                try {
+                    x = ti.position[0].as("px");
+                    y = ti.position[1].as("px");
+                    w = ti.width.as("px");
+                    h = ti.height.as("px");
+                } catch (e1) { isPara = false; }
+            }
+
+            if (!isPara) {
+                skippedPoint++;
+                var b = L.bounds;
+                x = b[0].as("px");
+                y = b[1].as("px");
+                w = b[2].as("px") - x;
+                h = b[3].as("px") - y;
+            }
+
+            var size = ""; try { size = num(ti.size.as("pt")); } catch (e2) {}
+            var leading = "auto"; try { if (!ti.useAutoLeading) leading = num(ti.leading.as("pt")); } catch (e3) { leading = "auto"; }
+            var tracking = "0"; try { tracking = num(ti.tracking); } catch (e4) {}
+            var font = ""; try { font = ti.font; } catch (e5) {}
+            var just = "left"; try { just = justName(ti.justification); } catch (e6) {}
+            var opacity = "100"; try { opacity = num(L.opacity); } catch (e7) {}
+
+            rows.push([
+                esc(path + L.name),
+                num(x), num(y), num(w), num(h),
+                num(docW - (x + w)),
+                esc(font), size, leading, tracking, just,
+                hexOf(ti), opacity, (L.visible ? "1" : "0"),
+                (isPara ? "para" : "point"), esc(ti.contents)
+            ].join("\t"));
+
+            found++;
+        }
+        for (j = 0; j < container.layerSets.length; j++) {
+            var g = container.layerSets[j];
+            collect(g, path + g.name + "/");
+        }
+    }
+
+    var out;
+    try {
+        docW = doc.width.as("px");
+        docH = doc.height.as("px");
+        res  = doc.resolution;
+
+        rows.push("#DOC\t" + num(docW) + "\t" + num(docH) + "\t" + num(res));
+        rows.push("#COLS\tname\tx\ty\tw\th\txRight\tfont\tsize\tleading\ttracking\tjustify\tcolor\topacity\tvisible\tkind\ttext");
+
+        collect(doc, "");
+
+        out = (found === 0) ? "EMPTY" : ("OK\t" + rows.join("\n"));
+    } catch (errC) {
+        out = "ERR\t" + errC.message;
+    } finally {
+        app.preferences.rulerUnits = prevRuler;
+        app.preferences.typeUnits  = prevType;
+        if (!wasOpen) { try { doc.close(SaveOptions.DONOTSAVECHANGES); } catch (eClose) {} }
+    }
+    return out;
+}
+
+
+function syncPhotoshopText() {
 
     if (app.documents.length === 0) {
-        alert("פתחו קודם מסמך אינדיזיין (רצוי באותו גודל כמו בפוטושופ).");
+        alert("פתחו קודם מסמך אינדיזיין עם קבצי פוטושופ מקושרים (File > Place).");
         return;
     }
 
     var doc = app.activeDocument;
 
-    var f = File.openDialog("בחרו את קובץ ה־TXT שייצאתם מפוטושופ");
-    if (!f) return;
+    /* ---------- עזרים ---------- */
 
-    f.encoding = "UTF-8";
-    if (!f.open("r")) { alert("לא הצלחתי לקרוא את הקובץ."); return; }
-    var raw = f.read();
-    f.close();
-    if (raw.length && raw.charCodeAt(0) === 65279) raw = raw.substring(1);
-
-    /* ---------- פענוח ---------- */
-
-    var lines = raw.split(/\r\n|\r|\n/);
-    var psW = 0, psH = 0, psRes = 72;
-    var cols = null;
-    var recs = [];
-    var i;
-
-    for (i = 0; i < lines.length; i++) {
-        var ln = lines[i];
-        if (ln === "") continue;
-        var p = ln.split("\t");
-
-        if (p[0] === "#DOC")  { psW = parseFloat(p[1]); psH = parseFloat(p[2]); psRes = parseFloat(p[3]) || 72; continue; }
-        if (p[0] === "#COLS") { cols = p.slice(1); continue; }
-        if (p[0].charAt(0) === "#") continue;
-
-        recs.push(p);
+    function jsStringLiteral(s) {
+        return '"' + String(s)
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/\r/g, "\\r")
+            .replace(/\n/g, "\\n") + '"';
     }
 
-    if (!cols)        { alert("הקובץ לא נראה כמו פלט של הסקריפט מפוטושופ (חסרה שורת #COLS)."); return; }
-    if (!recs.length) { alert("לא נמצאו שכבות טקסט בקובץ."); return; }
-
-    var idx = {};
-    for (i = 0; i < cols.length; i++) idx[cols[i]] = i;
-
-    function get(rec, key) {
-        var k = idx[key];
-        return (k === undefined || rec[k] === undefined) ? "" : rec[k];
+    function buildBridgeScript(filePath) {
+        return "#target photoshop\n(" + psWorker.toString() + ")(" + jsStringLiteral(filePath) + ");";
     }
-    function getNum(rec, key, dflt) {
-        var v = parseFloat(get(rec, key));
-        return isNaN(v) ? dflt : v;
+
+    function callPhotoshop(script) {
+        var result = null, gotError = null;
+        var bt = new BridgeTalk();
+        bt.target = "photoshop";
+        bt.body = script;
+        bt.onResult = function (res) { result = res.body; };
+        bt.onError  = function (err) { gotError = (err && err.body) ? err.body : String(err); };
+        bt.send();
+
+        var waitedMs = 0, stepMs = 100, maxMs = 180000; /* 3 דקות - כולל זמן הפעלת פוטושופ אם צריך */
+        while (result === null && gotError === null && waitedMs < maxMs) {
+            $.sleep(stepMs);
+            waitedMs += stepMs;
+        }
+        if (gotError !== null) throw new Error(gotError);
+        if (result === null) throw new Error("תם הזמן להמתנה לתשובה מפוטושופ (timeout).");
+        return result;
     }
+
     function unesc(s) {
         var out = "", j = 0;
         while (j < s.length) {
             var c = s.charAt(j);
             if (c === "\\" && j + 1 < s.length) {
                 var d = s.charAt(j + 1);
-                if (d === "n")       { out += "\r"; j += 2; continue; }
-                if (d === "t")       { out += "\t"; j += 2; continue; }
-                if (d === "\\")      { out += "\\"; j += 2; continue; }
+                if (d === "n") { out += "\r"; j += 2; continue; }
+                if (d === "t") { out += "\t"; j += 2; continue; }
+                if (d === "\\") { out += "\\"; j += 2; continue; }
             }
             out += c;
             j++;
@@ -854,29 +685,125 @@ function importPhotoshopText() {
         return out;
     }
 
-    /* ---------- יחידות ---------- */
+    function parsePsData(body) {
+        var lines = body.split(/\r\n|\r|\n/);
+        var psW = 0, psH = 0, psRes = 72, cols = null, recs = [];
+        var i;
+        for (i = 0; i < lines.length; i++) {
+            var ln = lines[i];
+            if (ln === "") continue;
+            var p = ln.split("\t");
+            if (p[0] === "#DOC")  { psW = parseFloat(p[1]); psH = parseFloat(p[2]); psRes = parseFloat(p[3]) || 72; continue; }
+            if (p[0] === "#COLS") { cols = p.slice(1); continue; }
+            if (p[0].charAt(0) === "#") continue;
+            recs.push(p);
+        }
+        if (!cols || !recs.length) return null;
 
-    var prevH = doc.viewPreferences.horizontalMeasurementUnits;
-    var prevV = doc.viewPreferences.verticalMeasurementUnits;
-    var prevO = doc.viewPreferences.rulerOrigin;
+        var idx = {};
+        for (i = 0; i < cols.length; i++) idx[cols[i]] = i;
 
-    doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.POINTS;
-    doc.viewPreferences.verticalMeasurementUnits   = MeasurementUnits.POINTS;
-    doc.viewPreferences.rulerOrigin                = RulerOrigin.PAGE_ORIGIN;
-    doc.zeroPoint = [0, 0];
+        return { docW: psW, docH: psH, res: psRes, idx: idx, rows: recs };
+    }
 
-    var K = 72 / psRes;                 /* פיקסלים -> נקודות */
-    var pageW = doc.documentPreferences.pageWidth;
+    function get(idx, rec, key) {
+        var k = idx[key];
+        return (k === undefined || rec[k] === undefined) ? "" : rec[k];
+    }
+    function getNum(idx, rec, key, dflt) {
+        var v = parseFloat(get(idx, rec, key));
+        return isNaN(v) ? dflt : v;
+    }
 
-    var page;
-    try { page = app.activeWindow.activePage; } catch (ePage) { page = doc.pages[0]; }
+    /* ---------- איתור קבצי פוטושופ מקושרים ועמוד היעד שלהם ---------- */
 
-    /* ---------- שכבה ---------- */
+    function findPsdPlacements() {
+        var out = [];
+        var links = doc.links.everyItem().getElements();
+        var i;
+        for (i = 0; i < links.length; i++) {
+            var link = links[i];
+            var fp;
+            try { fp = link.filePath; } catch (eFp) { continue; }
+            if (!fp || !/\.(psd|psb)$/i.test(fp)) continue;
+
+            var graphic;
+            try { graphic = link.parent; } catch (eG) { continue; }
+            if (!graphic || !graphic.isValid) continue;
+
+            /* מטפסים עד לפריט העליון שיושב ישירות על ה-Spread -
+               כך ההיקף (geometricBounds) שלו הוא כבר בקואורדינטות
+               של ה-Spread, גם אם התמונה מקוננת בתוך קבוצה */
+            var topItem = graphic, guard = 0;
+            while (topItem && topItem.parent && !(topItem.parent instanceof Spread) && guard < 25) {
+                topItem = topItem.parent;
+                guard++;
+            }
+
+            var bounds;
+            try { bounds = topItem.geometricBounds; } catch (eB) { continue; }
+
+            var page = null;
+            try { if (topItem.parentPage && topItem.parentPage.isValid) page = topItem.parentPage; } catch (eP) {}
+            if (!page) {
+                try {
+                    var cy = (bounds[0] + bounds[2]) / 2, cx = (bounds[1] + bounds[3]) / 2;
+                    var pages = topItem.parent.pages;
+                    var pj;
+                    for (pj = 0; pj < pages.length; pj++) {
+                        var pb = pages[pj].bounds;
+                        if (cx >= pb[1] && cx <= pb[3] && cy >= pb[0] && cy <= pb[2]) { page = pages[pj]; break; }
+                    }
+                } catch (eP2) {}
+            }
+            if (!page) continue;
+
+            var rotated = false;
+            try { rotated = Math.abs(topItem.rotationAngle % 360) > 0.05; } catch (eR) {}
+
+            var itemName = fp;
+            try { itemName = File(fp).name; } catch (eNm) {}
+
+            out.push({
+                filePath: fp,
+                page: page,
+                frameBounds: bounds,   /* [y1,x1,y2,x2] בקואורדינטות ה-Spread */
+                rotated: rotated,
+                displayName: itemName + " (עמ׳ " + page.name + ")"
+            });
+        }
+        return out;
+    }
+
+    var jobs = findPsdPlacements();
+    if (jobs.length === 0) {
+        alert("לא נמצאו קבצי פוטושופ (.psd / .psb) מקושרים במסמך.\nודאו שהם הונחו עם File > Place ולא הודבקו כתמונה שטוחה.");
+        return;
+    }
+
+    /* קיבוץ לפי קובץ, כדי לפתוח כל PSD בפוטושופ פעם אחת בלבד */
+    var byFile = {}, order = [], fi;
+    for (fi = 0; fi < jobs.length; fi++) {
+        var j = jobs[fi];
+        var key = j.filePath.toLowerCase();
+        if (!byFile[key]) { byFile[key] = { path: j.filePath, placements: [] }; order.push(key); }
+        byFile[key].placements.push(j);
+    }
+
+    var JUST = {
+        left:    Justification.LEFT_ALIGN,
+        right:   Justification.RIGHT_ALIGN,
+        center:  Justification.CENTER_ALIGN,
+        centered:Justification.CENTER_ALIGN,
+        justify: Justification.LEFT_JUSTIFIED,
+        justifyleft:   Justification.LEFT_JUSTIFIED,
+        justifyright:  Justification.RIGHT_JUSTIFIED,
+        justifycenter: Justification.CENTER_JUSTIFIED,
+        justifyall:    Justification.FULLY_JUSTIFIED
+    };
 
     var layer = doc.layers.itemByName(CFG.layerName);
     if (!layer.isValid) layer = doc.layers.add({ name: CFG.layerName });
-
-    /* ---------- עזרים ---------- */
 
     var colorCache = {};
     function swatch(hex) {
@@ -901,151 +828,195 @@ function importPhotoshopText() {
         return c;
     }
 
-    var JUST = {
-        left:    Justification.LEFT_ALIGN,
-        right:   Justification.RIGHT_ALIGN,
-        center:  Justification.CENTER_ALIGN,
-        centered:Justification.CENTER_ALIGN,
-        justify: Justification.LEFT_JUSTIFIED,
-        justifyleft:   Justification.LEFT_JUSTIFIED,
-        justifyright:  Justification.RIGHT_JUSTIFIED,
-        justifycenter: Justification.CENTER_JUSTIFIED,
-        justifyall:    Justification.FULLY_JUSTIFIED
-    };
+    var made = 0, hidden = 0, filesOk = 0;
+    var filesFailed = [], croppedWarnings = [], rotatedWarnings = [];
+    var missingFonts = {}, missingList = [], rtlFailed = false;
 
-    /* ---------- בנייה ---------- */
+    var prevH = doc.viewPreferences.horizontalMeasurementUnits;
+    var prevV = doc.viewPreferences.verticalMeasurementUnits;
+    var prevO = doc.viewPreferences.rulerOrigin;
+    doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.POINTS;
+    doc.viewPreferences.verticalMeasurementUnits   = MeasurementUnits.POINTS;
+    doc.viewPreferences.rulerOrigin                = RulerOrigin.PAGE_ORIGIN;
 
-    var made = 0, hidden = 0;
-    var missingFonts = {}, missingList = [];
-    var rtlFailed = false;
-
-    for (i = 0; i < recs.length; i++) {
-        var r = recs[i];
-
-        if (CFG.skipHidden && get(r, "visible") === "0") { hidden++; continue; }
-
-        var txt = unesc(get(r, "text"));
-        if (txt === "") continue;
-
-        var x      = getNum(r, "x", 0);
-        var y      = getNum(r, "y", 0);
-        var w      = getNum(r, "w", 0);
-        var h      = getNum(r, "h", 0);
-        var xRight = getNum(r, "xRight", psW - (x + w));
-
-        var wPt = w * K, hPt = h * K, pad = CFG.padding;
-
-        var x1, x2;
-        if (CFG.anchor === "right") {
-            x2 = pageW - (xRight * K);      /* נעוץ לקצה הימני - זה מה שמחזיק עברית במקום */
-            x1 = x2 - wPt;
-        } else {
-            x1 = x * K;
-            x2 = x1 + wPt;
-        }
-        var y1 = y * K;
-        var y2 = y1 + hPt;
-
-        var tf = page.textFrames.add(layer, undefined, undefined, {
-            geometricBounds: [y1 - pad, x1 - pad, y2 + pad, x2 + pad],
-            name: get(r, "name")
-        });
-
-        var tfp = tf.textFramePreferences;
-        try {
-            tfp.insetSpacing         = [0, 0, 0, 0];
-            tfp.verticalJustification = VerticalJustification.TOP_ALIGN;
-            tfp.firstBaselineOffset  = FirstBaseline.CAP_HEIGHT;
-        } catch (eTfp) {}
-
-        /* כיוון הסיפור נקבע לפני שמכניסים טקסט */
-        if (CFG.rtl) {
+    function runImport() {
+        for (var oi = 0; oi < order.length; oi++) {
+            var entry = byFile[order[oi]];
+            var raw;
             try {
-                tf.parentStory.storyPreferences.storyDirection =
-                    StoryDirectionOptions.RIGHT_TO_LEFT_DIRECTION;
-            } catch (eDir) { rtlFailed = true; }
-        }
+                raw = callPhotoshop(buildBridgeScript(entry.path));
+            } catch (eCall) {
+                filesFailed.push(entry.path + " — " + eCall.message);
+                continue;
+            }
 
-        tf.contents = txt;
+            if (raw.indexOf("ERR\t") === 0)   { filesFailed.push(entry.path + " — " + raw.substring(4)); continue; }
+            if (raw === "EMPTY")              { filesFailed.push(entry.path + " — לא נמצאו שכבות טקסט"); continue; }
+            if (raw.indexOf("OK\t") !== 0)    { filesFailed.push(entry.path + " — תשובה לא צפויה מפוטושופ"); continue; }
 
-        var t = tf.parentStory.texts[0];
+            var psData = parsePsData(raw.substring(3));
+            if (!psData) { filesFailed.push(entry.path + " — לא ניתן לפענח את הנתונים שהתקבלו"); continue; }
+            filesOk++;
 
-        if (CFG.worldReady) {
-            try { t.composer = "Adobe World-Ready Paragraph Composer"; } catch (eComp) {}
-        }
+            var natW = psData.docW / psData.res * 72;
+            var natH = psData.docH / psData.res * 72;
+            var K = 72 / psData.res;
 
-        if (CFG.rtl) {
-            try { t.paragraphDirection = ParagraphDirectionOptions.RIGHT_TO_LEFT_DIRECTION; } catch (e1) { rtlFailed = true; }
-            try { t.characterDirection = CharacterDirectionOptions.DEFAULT_DIRECTION; }        catch (e2) {}
-            try { t.digitsType         = DigitsTypeOptions.DEFAULT_DIGITS; }                   catch (e3) {}
-            try { t.kashidas           = KashidasOptions.KASHIDAS_OFF; }                       catch (e4) {}
-        }
+            for (var pp = 0; pp < entry.placements.length; pp++) {
+                var placement = entry.placements[pp];
+                if (placement.rotated) rotatedWarnings.push(placement.displayName);
 
-        /* פונט */
-        var wantFont = CFG.fontName || get(r, "font");
-        if (wantFont) {
-            var fnt = app.fonts.itemByName(wantFont);
-            if (fnt.isValid) {
-                try { t.appliedFont = fnt; } catch (e5) {}
-            } else if (!missingFonts[wantFont]) {
-                missingFonts[wantFont] = true;
-                missingList.push(wantFont);
+                var pb = placement.page.bounds; /* [y1,x1,y2,x2] בקואורדינטות ה-Spread */
+                var fb = placement.frameBounds;
+                var frameX1 = fb[1] - pb[1], frameY1 = fb[0] - pb[0];
+                var frameX2 = fb[3] - pb[1], frameY2 = fb[2] - pb[0];
+                var frameW = frameX2 - frameX1, frameH = frameY2 - frameY1;
+
+                if (natW > 0 && natH > 0 && frameH > 0) {
+                    var frameAR = frameW / frameH, psAR = natW / natH;
+                    if (Math.abs(frameAR - psAR) / psAR > 0.03) croppedWarnings.push(placement.displayName);
+                }
+
+                var scaleX = natW > 0 ? frameW / natW : 1;
+                var scaleY = natH > 0 ? frameH / natH : 1;
+
+                for (var rr = 0; rr < psData.rows.length; rr++) {
+                    var rec = psData.rows[rr];
+
+                    if (CFG.skipHidden && get(psData.idx, rec, "visible") === "0") { hidden++; continue; }
+
+                    var txt = unesc(get(psData.idx, rec, "text"));
+                    if (txt === "") continue;
+
+                    var x = getNum(psData.idx, rec, "x", 0);
+                    var y = getNum(psData.idx, rec, "y", 0);
+                    var w = getNum(psData.idx, rec, "w", 0);
+                    var h = getNum(psData.idx, rec, "h", 0);
+                    var xRight = getNum(psData.idx, rec, "xRight", psData.docW - (x + w));
+
+                    var wPt = w * K * scaleX, hPt = h * K * scaleY, pad = CFG.padding;
+
+                    var x1, x2;
+                    if (CFG.anchor === "right") {
+                        x2 = frameX2 - (xRight * K * scaleX);
+                        x1 = x2 - wPt;
+                    } else {
+                        x1 = frameX1 + (x * K * scaleX);
+                        x2 = x1 + wPt;
+                    }
+                    var y1 = frameY1 + (y * K * scaleY);
+                    var y2 = y1 + hPt;
+
+                    var tf = placement.page.textFrames.add(layer, undefined, undefined, {
+                        geometricBounds: [y1 - pad, x1 - pad, y2 + pad, x2 + pad],
+                        name: get(psData.idx, rec, "name")
+                    });
+
+                    var tfp = tf.textFramePreferences;
+                    try {
+                        tfp.insetSpacing          = [0, 0, 0, 0];
+                        tfp.verticalJustification = VerticalJustification.TOP_ALIGN;
+                        tfp.firstBaselineOffset   = FirstBaseline.CAP_HEIGHT;
+                    } catch (eTfp) {}
+
+                    if (CFG.rtl) {
+                        try {
+                            tf.parentStory.storyPreferences.storyDirection =
+                                StoryDirectionOptions.RIGHT_TO_LEFT_DIRECTION;
+                        } catch (eDir) { rtlFailed = true; }
+                    }
+
+                    tf.contents = txt;
+
+                    var t = tf.parentStory.texts[0];
+
+                    if (CFG.worldReady) {
+                        try { t.composer = "Adobe World-Ready Paragraph Composer"; } catch (eComp) {}
+                    }
+
+                    if (CFG.rtl) {
+                        try { t.paragraphDirection = ParagraphDirectionOptions.RIGHT_TO_LEFT_DIRECTION; } catch (e1) { rtlFailed = true; }
+                        try { t.characterDirection = CharacterDirectionOptions.DEFAULT_DIRECTION; }        catch (e2) {}
+                        try { t.digitsType         = DigitsTypeOptions.DEFAULT_DIGITS; }                   catch (e3) {}
+                        try { t.kashidas           = KashidasOptions.KASHIDAS_OFF; }                       catch (e4) {}
+                    }
+
+                    var wantFont = CFG.fontName || get(psData.idx, rec, "font");
+                    if (wantFont) {
+                        var fnt = app.fonts.itemByName(wantFont);
+                        if (fnt.isValid) {
+                            try { t.appliedFont = fnt; } catch (e5) {}
+                        } else if (!missingFonts[wantFont]) {
+                            missingFonts[wantFont] = true;
+                            missingList.push(wantFont);
+                        }
+                    }
+
+                    var size = CFG.fontSize > 0 ? CFG.fontSize : getNum(psData.idx, rec, "size", 0);
+                    if (size > 0) { try { t.pointSize = size; } catch (e6) {} }
+
+                    var lead = get(psData.idx, rec, "leading");
+                    try {
+                        if (lead === "auto" || lead === "") t.leading = Leading.AUTO;
+                        else if (!isNaN(parseFloat(lead)))  t.leading = parseFloat(lead);
+                    } catch (e7) {}
+
+                    var trk = getNum(psData.idx, rec, "tracking", 0);
+                    if (trk) { try { t.tracking = trk; } catch (e8) {} }
+
+                    var alignKey = (CFG.align === "auto") ? String(get(psData.idx, rec, "justify")).toLowerCase() : CFG.align;
+                    if (JUST[alignKey]) { try { t.justification = JUST[alignKey]; } catch (e9) {} }
+
+                    if (CFG.useColor) {
+                        var sw = swatch(get(psData.idx, rec, "color"));
+                        if (sw) { try { t.fillColor = sw; } catch (e10) {} }
+                    }
+
+                    if (CFG.autoSize !== "off") {
+                        try {
+                            tfp.autoSizingReferencePoint = (CFG.anchor === "right")
+                                ? AutoSizingReferenceEnum.TOP_RIGHT_POINT
+                                : AutoSizingReferenceEnum.TOP_LEFT_POINT;
+                            tfp.autoSizingType =
+                                CFG.autoSize === "width"  ? AutoSizingTypeEnum.WIDTH_ONLY :
+                                CFG.autoSize === "height" ? AutoSizingTypeEnum.HEIGHT_ONLY :
+                                                            AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+                        } catch (e11) {}
+                    } else if (CFG.fitFrame) {
+                        try { tf.fit(FitOptions.FRAME_TO_CONTENT); } catch (e12) {}
+                    }
+
+                    made++;
+                }
             }
         }
-
-        /* גודל */
-        var size = CFG.fontSize > 0 ? CFG.fontSize : getNum(r, "size", 0);
-        if (size > 0) { try { t.pointSize = size; } catch (e6) {} }
-
-        /* ריווח שורות */
-        var lead = get(r, "leading");
-        try {
-            if (lead === "auto" || lead === "") t.leading = Leading.AUTO;
-            else if (!isNaN(parseFloat(lead)))  t.leading = parseFloat(lead);
-        } catch (e7) {}
-
-        /* מרווח אותיות */
-        var trk = getNum(r, "tracking", 0);
-        if (trk) { try { t.tracking = trk; } catch (e8) {} }
-
-        /* יישור */
-        var alignKey = (CFG.align === "auto") ? String(get(r, "justify")).toLowerCase() : CFG.align;
-        if (JUST[alignKey]) { try { t.justification = JUST[alignKey]; } catch (e9) {} }
-
-        /* צבע */
-        if (CFG.useColor) {
-            var sw = swatch(get(r, "color"));
-            if (sw) { try { t.fillColor = sw; } catch (e10) {} }
-        }
-
-        /* התאמת תיבה */
-        if (CFG.autoSize !== "off") {
-            try {
-                tfp.autoSizingReferencePoint = (CFG.anchor === "right")
-                    ? AutoSizingReferenceEnum.TOP_RIGHT_POINT
-                    : AutoSizingReferenceEnum.TOP_LEFT_POINT;
-                tfp.autoSizingType =
-                    CFG.autoSize === "width"  ? AutoSizingTypeEnum.WIDTH_ONLY :
-                    CFG.autoSize === "height" ? AutoSizingTypeEnum.HEIGHT_ONLY :
-                                                AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-            } catch (e11) {}
-        } else if (CFG.fitFrame) {
-            try { tf.fit(FitOptions.FRAME_TO_CONTENT); } catch (e12) {}
-        }
-
-        made++;
     }
 
-    /* ---------- שחזור העדפות ---------- */
-
-    doc.viewPreferences.horizontalMeasurementUnits = prevH;
-    doc.viewPreferences.verticalMeasurementUnits   = prevV;
-    doc.viewPreferences.rulerOrigin                = prevO;
+    try {
+        app.doScript(runImport, ScriptLanguage.JAVASCRIPT, undefined,
+                     UndoModes.ENTIRE_SCRIPT, "סנכרון טקסטים מפוטושופ");
+    } finally {
+        doc.viewPreferences.horizontalMeasurementUnits = prevH;
+        doc.viewPreferences.verticalMeasurementUnits   = prevV;
+        doc.viewPreferences.rulerOrigin                = prevO;
+    }
 
     /* ---------- דוח ---------- */
 
-    var msg = "יובאו " + made + " תיבות טקסט לשכבה “" + CFG.layerName + "”.";
-    if (hidden) msg += "\n" + hidden + " שכבות מוסתרות דולגו.";
+    var msg = "נמצאו " + jobs.length + " הפניות לקבצי פוטושופ (" + order.length + " קבצים ייחודיים).\n" +
+              "יובאו " + made + " תיבות טקסט לשכבה “" + CFG.layerName + "”.";
+    if (filesOk) msg += "\n" + filesOk + " קבצים עובדו בהצלחה.";
+    if (hidden)  msg += "\n" + hidden + " שכבות מוסתרות דולגו.";
+
+    if (filesFailed.length) {
+        msg += "\n\n⚠ קבצים שנכשלו:\n• " + filesFailed.join("\n• ");
+    }
+    if (rotatedWarnings.length) {
+        msg += "\n\n⚠ הפניות מסובבות (המיקום עלול להיות לא מדויק):\n• " + rotatedWarnings.join("\n• ");
+    }
+    if (croppedWarnings.length) {
+        msg += "\n\n⚠ יחס הממדים של המסגרת שונה מיחס הממדים של הפוטושופ - יכול להעיד על חיתוך פנימי (המיקום עלול להיות לא מדויק):\n• " + croppedWarnings.join("\n• ");
+    }
     if (rtlFailed) {
         msg += "\n\n⚠ לא הצלחתי להחיל RTL.\nצריך אינדיזיין עם תמיכה במזרח התיכון " +
                "(InDesign ME / World-Ready), או להפעיל ידנית:\nType > Story > Direction > Right to Left.";
@@ -1053,13 +1024,16 @@ function importPhotoshopText() {
     if (missingList.length) {
         msg += "\n\n⚠ פונטים שלא נמצאו במערכת:\n• " + missingList.join("\n• ");
     }
+
     alert(msg);
 }
 
 
 try {
-    app.doScript(importPhotoshopText, ScriptLanguage.JAVASCRIPT, undefined,
-                 UndoModes.ENTIRE_SCRIPT, "ייבוא טקסטים מפוטושופ");
+    if (!BridgeTalk.isRunning("photoshop")) {
+        /* השליחה תפעיל את פוטושופ אוטומטית - רק מזהירים שזה עשוי לקחת רגע */
+    }
+    syncPhotoshopText();
 } catch (eRun) {
     alert("שגיאה: " + eRun.message + (eRun.line ? "\nשורה: " + eRun.line : ""));
 }
@@ -1071,8 +1045,7 @@ try {
 
   var $ = function (id) { return document.getElementById(id); };
 
-  var PS_SRC = $('src-ps').textContent.replace(/^\n/, '');
-  var ID_SRC = $('src-id').textContent.replace(/^\n/, '');
+  var SYNC_SRC = $('src-sync').textContent.replace(/^\n/, '');
 
   /* ---------------- config -> CFG block ---------------- */
 
@@ -1132,16 +1105,15 @@ try {
     return lines.join('\n');
   }
 
-  function idSource() {
+  function syncSource() {
     var block = buildCfgBlock(readCfg());
-    return ID_SRC.replace(/var CFG = \{[\s\S]*?\n\};/, function () { return block; });
+    return SYNC_SRC.replace(/var CFG = \{[\s\S]*?\n\};/, function () { return block; });
   }
 
   /* ---------------- render ---------------- */
 
   function render() {
-    $('psCode').textContent = PS_SRC;
-    $('idCode').textContent = idSource();
+    $('syncCode').textContent = syncSource();
   }
 
   function download(name, text) {
@@ -1182,14 +1154,12 @@ try {
   var ids = ['cfgAnchor','cfgAlign','cfgFont','cfgSize','cfgAutoSize',
              'cfgPad','cfgLayer','cfgRtl','cfgWR','cfgColor','cfgHidden'];
   ids.forEach(function (id) {
-    $(id).addEventListener('input', function () { render(); redrawIfParsed(); });
-    $(id).addEventListener('change', function () { render(); redrawIfParsed(); });
+    $(id).addEventListener('input', render);
+    $(id).addEventListener('change', render);
   });
 
-  $('psCopy').addEventListener('click', function () { copy(PS_SRC, this); });
-  $('idCopy').addEventListener('click', function () { copy(idSource(), this); });
-  $('psDl').addEventListener('click', function () { download('export_text_layers.jsx', PS_SRC); });
-  $('idDl').addEventListener('click', function () { download('import_text_indesign.jsx', idSource()); });
+  $('syncCopy').addEventListener('click', function () { copy(syncSource(), this); });
+  $('syncDl').addEventListener('click', function () { download('sync_photoshop_text.jsx', syncSource()); });
 
   function toggler(btnId, preId) {
     $(btnId).addEventListener('click', function () {
@@ -1197,180 +1167,7 @@ try {
       this.textContent = on ? 'הצג הכל' : 'כווץ';
     });
   }
-  toggler('psExpand', 'psCode');
-  toggler('idExpand', 'idCode');
-
-  /* ---------------- TSV preview ---------------- */
-
-  var parsed = null;
-
-  function unesc(s) {
-    var out = '', j = 0;
-    while (j < s.length) {
-      var c = s.charAt(j);
-      if (c === '\\' && j + 1 < s.length) {
-        var d = s.charAt(j + 1);
-        if (d === 'n') { out += '\n'; j += 2; continue; }
-        if (d === 't') { out += '\t'; j += 2; continue; }
-        if (d === '\\') { out += '\\'; j += 2; continue; }
-      }
-      out += c; j++;
-    }
-    return out;
-  }
-
-  function parseTsv(raw) {
-    if (raw.charCodeAt(0) === 0xFEFF) raw = raw.slice(1);
-    var lines = raw.split(/\r\n|\r|\n/);
-    var doc = { w: 0, h: 0, res: 72 }, cols = null, recs = [];
-
-    for (var i = 0; i < lines.length; i++) {
-      var ln = lines[i];
-      if (!ln) continue;
-      var p = ln.split('\t');
-      if (p[0] === '#DOC')  { doc.w = parseFloat(p[1]); doc.h = parseFloat(p[2]); doc.res = parseFloat(p[3]) || 72; continue; }
-      if (p[0] === '#COLS') { cols = p.slice(1); continue; }
-      if (p[0].charAt(0) === '#') continue;
-      recs.push(p);
-    }
-    if (!cols) throw new Error('חסרה שורת #COLS — זה לא נראה כמו פלט של הסקריפט.');
-    if (!doc.w || !doc.h) throw new Error('חסרה שורת #DOC עם מידות המסמך.');
-    if (!recs.length) throw new Error('לא נמצאו שורות של שכבות.');
-
-    var idx = {};
-    cols.forEach(function (c, k) { idx[c] = k; });
-
-    var items = recs.map(function (r) {
-      function g(k) { var q = idx[k]; return (q === undefined || r[q] === undefined) ? '' : r[q]; }
-      function n(k, d) { var v = parseFloat(g(k)); return isNaN(v) ? d : v; }
-      var x = n('x', 0), w = n('w', 0);
-      return {
-        name: unesc(g('name')), x: x, y: n('y', 0), w: w, h: n('h', 0),
-        xRight: n('xRight', doc.w - (x + w)),
-        font: g('font'), size: n('size', 0), justify: g('justify') || 'left',
-        color: g('color'), visible: g('visible') !== '0',
-        kind: g('kind') || 'para', text: unesc(g('text'))
-      };
-    });
-
-    return { doc: doc, items: items };
-  }
-
-  function esc(s) {
-    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  function draw() {
-    if (!parsed) return;
-    var cfg = readCfg(), doc = parsed.doc;
-    var items = parsed.items.filter(function (it) { return cfg.skipHidden ? it.visible : true; });
-
-    var mock = $('mock');
-    mock.style.aspectRatio = doc.w + ' / ' + doc.h;
-    mock.innerHTML = '';
-
-    /* קנה מידה: רוחב התצוגה חלקי רוחב המסמך בפיקסלים */
-    var scale = (mock.clientWidth || 600) / doc.w;
-
-    items.forEach(function (it) {
-      var el = document.createElement('div');
-      el.className = 'mock-box' + (it.kind === 'point' ? ' pt' : '');
-
-      /* מיקום כאחוזים — כך שהמוקאפ נשאר נכון גם כשמשנים גודל חלון */
-      var leftPct;
-      if (cfg.anchor === 'right') leftPct = ((doc.w - it.xRight - it.w) / doc.w) * 100;
-      else                        leftPct = (it.x / doc.w) * 100;
-
-      el.style.left   = leftPct + '%';
-      el.style.top    = (it.y / doc.h) * 100 + '%';
-      el.style.width  = (it.w / doc.w) * 100 + '%';
-      el.style.height = (it.h / doc.h) * 100 + '%';
-
-      var align = cfg.align === 'auto' ? it.justify : cfg.align;
-      var css = { right: 'right', left: 'left', center: 'center', centered: 'center' }[align] || 'right';
-
-      var size = (cfg.fontSize > 0 ? cfg.fontSize * (doc.res / 72) : it.size * (doc.res / 72)) * scale;
-      var t = document.createElement('span');
-      t.className = 't';
-      t.style.fontSize = Math.max(4, size) + 'px';
-      t.style.textAlign = css;
-      t.style.direction = cfg.rtl ? 'rtl' : 'ltr';
-      t.style.color = /^[0-9A-Fa-f]{6}$/.test(it.color) ? '#' + it.color : '#141a2e';
-      t.textContent = it.text;
-      el.appendChild(t);
-      el.title = it.name + '  ·  ' + Math.round(it.w) + '×' + Math.round(it.h) + 'px';
-      mock.appendChild(el);
-    });
-
-    var fonts = {}, nf = 0;
-    items.forEach(function (it) { if (it.font && !fonts[it.font]) { fonts[it.font] = 1; nf++; } });
-
-    $('stLayers').textContent = items.length;
-    $('stSize').textContent = Math.round(doc.w * 72 / doc.res) + '×' + Math.round(doc.h * 72 / doc.res) + 'pt';
-    $('stRes').textContent = Math.round(doc.res) + 'ppi';
-    $('stFonts').textContent = nf;
-    $('anchorNote').textContent = cfg.anchor === 'right'
-      ? 'ממוקם לפי המרחק מהקצה הימני'
-      : 'ממוקם לפי המרחק מהקצה השמאלי';
-
-    var rows = items.map(function (it) {
-      return '<tr><td class="name">' + esc(it.name) + '</td>' +
-             '<td class="n">' + Math.round(it.xRight) + '</td>' +
-             '<td class="n">' + Math.round(it.y) + '</td>' +
-             '<td class="n">' + (it.size || '—') + '</td>' +
-             '<td class="txt" title="' + esc(it.text) + '">' + esc(it.text.split('\n')[0]) + '</td></tr>';
-    }).join('');
-    $('tbody').innerHTML = rows;
-    $('previewOut').style.display = '';
-  }
-
-  function redrawIfParsed() { if (parsed) draw(); }
-
-  $('parseBtn').addEventListener('click', function () {
-    var raw = $('tsv').value;
-    var st = $('status');
-    if (!raw.trim()) { st.className = 'status err'; st.textContent = 'הדביקו קודם את תוכן קובץ ה־TXT.'; return; }
-    try {
-      parsed = parseTsv(raw);
-      st.className = 'status good';
-      st.textContent = 'נמצאו ' + parsed.items.length + ' שכבות טקסט.';
-      draw();
-    } catch (e) {
-      parsed = null;
-      $('previewOut').style.display = 'none';
-      st.className = 'status err';
-      st.textContent = '✕ ' + e.message;
-    }
-  });
-
-  $('clearBtn').addEventListener('click', function () {
-    $('tsv').value = ''; parsed = null;
-    $('previewOut').style.display = 'none';
-    $('status').textContent = ''; $('status').className = 'status';
-  });
-
-  var DEMO = [
-    '#PSTEXT\t2\thttps://d85c.com/indi_ps',
-    '#DOC\t2480\t3508\t300',
-    '#COLS\tname\tx\ty\tw\th\txRight\tfont\tsize\tleading\ttracking\tjustify\tcolor\topacity\tvisible\tkind\ttext',
-    'כותרת ראשית\t520\t300\t1660\t500\t300\tArialMT\t48\t58\t0\tright\t1A1A2E\t100\t1\tpara\tפסטיבל האביב\\nתשפ״ו',
-    'תת כותרת\t760\t880\t1420\t120\t300\tArialMT\t22\t28\t10\tright\t6E4AA0\t100\t1\tpara\tשלושה ימים של מוזיקה, אוכל ואמנות',
-    'תאריך\t1580\t1060\t600\t100\t300\tArialMT\t18\tauto\t0\tright\t1A1A2E\t100\t1\tpara\t14–16 באפריל',
-    'גוף\t400\t1300\t1780\t340\t300\tArialMT\t15\t21\t0\tright\t2E2E3E\t100\t1\tpara\tהפסטיבל חוזר לשנה החמישית ברציפות, הפעם עם במה שנייה בגן העירוני.\\nכרטיסים במכירה מוקדמת עד סוף החודש.',
-    'הערת שוליים\t400\t3180\t1780\t70\t300\tArialMT\t11\tauto\t0\tright\t7A7A8C\t100\t1\tpara\tהכניסה לילדים עד גיל 6 ללא תשלום · ט.ל.ח',
-    'לוגו\t160\t3180\t180\t60\t2140\tArialMT\t12\tauto\t0\tleft\t7A7A8C\t100\t1\tpoint\td85c'
-  ].join('\n');
-
-  $('demoBtn').addEventListener('click', function () {
-    $('tsv').value = DEMO;
-    $('parseBtn').click();
-  });
-
-  var rt;
-  window.addEventListener('resize', function () {
-    clearTimeout(rt);
-    rt = setTimeout(redrawIfParsed, 150);
-  });
+  toggler('syncExpand', 'syncCode');
 
   render();
 })();
